@@ -40,6 +40,7 @@ namespace Pinta
 		ScrolledWindow sw;
 		DockFrame dock;
 		Menu show_pad;
+		CommandMapWindow cmd_map;
 
 		CanvasPad canvas_pad;
 
@@ -102,11 +103,18 @@ namespace Pinta
 			PintaCore.Actions.View.ZoomToWindow.Activated += new EventHandler (ZoomToWindow_Activated);
 			PintaCore.Actions.View.ZoomToSelection.Activated += new EventHandler (ZoomToSelection_Activated);
 			PintaCore.Workspace.ActiveDocumentChanged += ActiveDocumentChanged;
+
+			// Set up the Command Map window.
+			// TODO(scott)
 		}
 
 		[GLib.ConnectBefore]
 		void MainWindow_KeyPressEvent (object o, KeyPressEventArgs e)
 		{
+			if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R) {
+				System.Console.WriteLine ("Ctrl pressed!");
+			}
+
 			// Give the Canvas (and by extension the tools)
 			// first shot at handling the event if
 			// the mouse pointer is on the canvas
@@ -119,6 +127,10 @@ namespace Pinta
 		[GLib.ConnectBefore]
 		void MainWindow_KeyReleaseEvent (object o, KeyReleaseEventArgs e)
 		{
+			if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R) {
+				System.Console.WriteLine ("Ctrl released!");
+			}
+
 			// Give the Canvas (and by extension the tools)
 			// first shot at handling the event if
 			// the mouse pointer is on the canvas

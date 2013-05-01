@@ -186,6 +186,7 @@
     <Compile Include="gtk-gui\Pinta.ProgressDialog.cs" />
     <Compile Include="Dialogs\ProgressDialog.cs" />
     <Compile Include="MainWindow.cs" />
+    <Compile Include="CommandMapWindow.cs" />
     <Compile Include="Pads\OpenImagesPad.cs" />
     <Compile Include="Actions\Addins\AddinManagerAction.cs" />
     <Compile Include="Actions\File\PrintDocumentAction.cs" />
