@@ -6,8 +6,10 @@ namespace Pinta
 	{
 		public CommandMapWindow () : base ("Command Map")
 		{
+			WindowPosition = WindowPosition.Center;
 			SetDefaultSize (200, 200);
-			//Decorated = false;
+			Decorated = false;
+			Opacity = 0.9;
 
             Label label = new Label ("Hello");
             Add (label);
