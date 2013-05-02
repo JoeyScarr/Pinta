@@ -10,6 +10,7 @@ namespace Pinta
 			SetDefaultSize (200, 200);
 			Decorated = false;
 			Opacity = 0.9;
+			Modal = true;
 
 			Label label = new Label ("Hello");
 			Add (label);
