@@ -112,7 +112,6 @@ namespace Pinta
 		void MainWindow_KeyPressEvent (object o, KeyPressEventArgs e)
 		{
 			if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R) {
-				System.Console.WriteLine ("Ctrl pressed!");
 				cmd_map.SetPosition (WindowPosition.Center);
 				cmd_map.ShowAll ();
 			}
