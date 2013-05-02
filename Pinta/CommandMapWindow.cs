@@ -1,5 +1,6 @@
 using Gtk;
 using Pinta.Core;
+using Pinta.Gui.Widgets;
 
 namespace Pinta
 {
@@ -28,9 +29,8 @@ namespace Pinta
 
 		private void HandleToolAdded (object sender, ToolEventArgs e)
 		{
-			Gtk.Image icon = new Gtk.Image (PintaCore.Resources.GetIcon (e.Tool.Icon));
-			Button tool = new Button (icon);
-			tools.PackStart (tool);
+			var button = new CommandMapButton (e.Tool);
+			tools.PackStart (button);
 		}
 
 		private void HandleToolRemoved (object sender, ToolEventArgs e)

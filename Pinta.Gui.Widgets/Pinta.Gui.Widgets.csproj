@@ -104,6 +104,7 @@
     <Compile Include="Widgets\HistogramWidget.cs" />
     <Compile Include="Widgets\ToolBoxWidget.cs" />
     <Compile Include="Widgets\OpenImages\OpenImagesListWidget.cs" />
+    <Compile Include="Widgets\CommandMapButton.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
