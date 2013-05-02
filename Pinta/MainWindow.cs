@@ -51,6 +51,9 @@ namespace Pinta
 			// Build our window
 			CreateWindow ();
 
+			// Set up the Command Map window.
+			cmd_map = new CommandMapWindow (window_shell);
+
 			// Initialize interface things
 			window_shell.AddAccelGroup (PintaCore.Actions.AccelGroup);
 			dialog_handlers = new ActionHandlers ();
@@ -103,9 +106,6 @@ namespace Pinta
 			PintaCore.Actions.View.ZoomToWindow.Activated += new EventHandler (ZoomToWindow_Activated);
 			PintaCore.Actions.View.ZoomToSelection.Activated += new EventHandler (ZoomToSelection_Activated);
 			PintaCore.Workspace.ActiveDocumentChanged += ActiveDocumentChanged;
-
-			// Set up the Command Map window.
-			cmd_map = new CommandMapWindow (window_shell);
 		}
 
 		[GLib.ConnectBefore]

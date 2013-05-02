@@ -1,9 +1,12 @@
 using Gtk;
+using Pinta.Core;
 
 namespace Pinta
 {
 	public class CommandMapWindow : Window
 	{
+		private HBox tools;
+
 		public CommandMapWindow (Window parent) : base ("Command Map")
 		{
 			TransientFor = parent;
@@ -13,17 +16,26 @@ namespace Pinta
 			SkipPagerHint = true;
 			SkipTaskbarHint = true;
 
-			VBox box = new VBox ();
-			Add (box);
-
-			Frame frame = new Frame ("Tools");
-			box.PackEnd (frame);
-
-			Button button = new Button ("Hello");
-			frame.Add (button);
+			tools = new HBox ();
+			Add (tools);
 
 			KeyReleaseEvent += CommandMapWindow_KeyReleaseEvent;
 			FocusOutEvent += CommandMapWindow_FocusOutEvent;
+
+			PintaCore.Tools.ToolAdded += HandleToolAdded;
+			PintaCore.Tools.ToolRemoved += HandleToolRemoved;
+		}
+
+		private void HandleToolAdded (object sender, ToolEventArgs e)
+		{
+			Gtk.Image icon = new Gtk.Image (PintaCore.Resources.GetIcon (e.Tool.Icon));
+			Button tool = new Button (icon);
+			tools.PackStart (tool);
+		}
+
+		private void HandleToolRemoved (object sender, ToolEventArgs e)
+		{
+			//tools.Remove (e.Tool.ToolItem);
 		}
 
 		[GLib.ConnectBefore]
