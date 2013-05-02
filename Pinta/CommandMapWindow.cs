@@ -13,7 +13,15 @@ namespace Pinta
             Add (label);
 
             KeyReleaseEvent += CommandMapWindow_KeyReleaseEvent;
+            FocusOutEvent += CommandMapWindow_FocusOutEvent;
 		}
+
+        [GLib.ConnectBefore]
+        void CommandMapWindow_FocusOutEvent (object o, FocusOutEventArgs e)
+        {
+            System.Console.WriteLine ("Lost focus.");
+            HideAll ();
+        }
 
         [GLib.ConnectBefore]
         void CommandMapWindow_KeyReleaseEvent (object o, KeyReleaseEventArgs e)
