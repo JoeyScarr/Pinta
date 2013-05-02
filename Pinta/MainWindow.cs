@@ -105,7 +105,7 @@ namespace Pinta
 			PintaCore.Workspace.ActiveDocumentChanged += ActiveDocumentChanged;
 
 			// Set up the Command Map window.
-			// TODO(scott)
+			cmd_map = new CommandMapWindow ();
 		}
 
 		[GLib.ConnectBefore]
@@ -113,6 +113,7 @@ namespace Pinta
 		{
 			if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R) {
 				System.Console.WriteLine ("Ctrl pressed!");
+				cmd_map.ShowAll ();
 			}
 
 			// Give the Canvas (and by extension the tools)
@@ -129,6 +130,7 @@ namespace Pinta
 		{
 			if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R) {
 				System.Console.WriteLine ("Ctrl released!");
+				cmd_map.HideAll ();
 			}
 
 			// Give the Canvas (and by extension the tools)
