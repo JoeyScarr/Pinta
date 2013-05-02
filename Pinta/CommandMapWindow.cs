@@ -27,13 +27,13 @@ namespace Pinta
 		}
 
 		[GLib.ConnectBefore]
-		void CommandMapWindow_FocusOutEvent (object o, FocusOutEventArgs e)
+		void CommandMapWindow_FocusOutEvent (object sender, FocusOutEventArgs e)
 		{
 			HideAll ();
 		}
 
 		[GLib.ConnectBefore]
-		void CommandMapWindow_KeyReleaseEvent (object o, KeyReleaseEventArgs e)
+		void CommandMapWindow_KeyReleaseEvent (object sender, KeyReleaseEventArgs e)
 		{
 			if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R) {
 				HideAll ();
