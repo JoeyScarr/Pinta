@@ -24,6 +24,7 @@ namespace Pinta
 			tools2 = new HBox ();
 			vbox.Add (tools2);
 
+			KeyPressEvent += HandleKeyPress;
 			KeyReleaseEvent += HandleKeyRelease;
 			FocusOutEvent += HandleFocusOut;
 
@@ -57,6 +58,11 @@ namespace Pinta
 			if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R) {
 				HideAll ();
 			}
+		}
+
+		private void HandleKeyPress (object sender, KeyPressEventArgs e)
+		{
+			// TODO
 		}
 	}
 }
