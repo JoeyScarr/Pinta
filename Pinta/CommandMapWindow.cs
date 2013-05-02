@@ -11,27 +11,27 @@ namespace Pinta
 			Decorated = false;
 			Opacity = 0.9;
 
-            Label label = new Label ("Hello");
-            Add (label);
+			Label label = new Label ("Hello");
+			Add (label);
 
-            KeyReleaseEvent += CommandMapWindow_KeyReleaseEvent;
-            FocusOutEvent += CommandMapWindow_FocusOutEvent;
+			KeyReleaseEvent += CommandMapWindow_KeyReleaseEvent;
+			FocusOutEvent += CommandMapWindow_FocusOutEvent;
 		}
 
-        [GLib.ConnectBefore]
-        void CommandMapWindow_FocusOutEvent (object o, FocusOutEventArgs e)
-        {
-            System.Console.WriteLine ("Lost focus.");
-            HideAll ();
-        }
+		[GLib.ConnectBefore]
+		void CommandMapWindow_FocusOutEvent (object o, FocusOutEventArgs e)
+		{
+			System.Console.WriteLine ("Lost focus.");
+			HideAll ();
+		}
 
-        [GLib.ConnectBefore]
-        void CommandMapWindow_KeyReleaseEvent (object o, KeyReleaseEventArgs e)
-        {
-            if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R) {
-                System.Console.WriteLine ("Ctrl released! (on cmd_map)");
-                HideAll ();
-            }
-        }
-    }
+		[GLib.ConnectBefore]
+		void CommandMapWindow_KeyReleaseEvent (object o, KeyReleaseEventArgs e)
+		{
+			if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R) {
+				System.Console.WriteLine ("Ctrl released! (on cmd_map)");
+				HideAll ();
+			}
+		}
+	}
 }
