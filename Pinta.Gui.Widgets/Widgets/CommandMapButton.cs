@@ -12,6 +12,8 @@ namespace Pinta.Gui.Widgets
 		{
 			this.tool = tool;
 
+			Relief = ReliefStyle.None;
+
 			var icon = new Image (PintaCore.Resources.GetIcon (tool.Icon));
 
 			VBox box = new VBox ();
