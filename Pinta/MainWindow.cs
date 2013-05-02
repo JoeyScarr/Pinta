@@ -112,7 +112,6 @@ namespace Pinta
 		void MainWindow_KeyPressEvent (object o, KeyPressEventArgs e)
 		{
 			if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R) {
-				cmd_map.SetPosition (WindowPosition.Center);
 				cmd_map.ShowAll ();
 			}
 
@@ -128,10 +127,6 @@ namespace Pinta
 		[GLib.ConnectBefore]
 		void MainWindow_KeyReleaseEvent (object o, KeyReleaseEventArgs e)
 		{
-			if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R) {
-				cmd_map.HideAll ();
-			}
-
 			// Give the Canvas (and by extension the tools)
 			// first shot at handling the event if
 			// the mouse pointer is on the canvas

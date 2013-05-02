@@ -10,7 +10,6 @@ namespace Pinta
 
 		public CommandMapWindow (Window parent) : base ("Command Map")
 		{
-			TransientFor = parent;
 			Decorated = false;
 			Opacity = 0.9;
 			Modal = true;
