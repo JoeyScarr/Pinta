@@ -20,8 +20,8 @@ namespace Pinta
 			tools = new HBox ();
 			Add (tools);
 
-			KeyReleaseEvent += CommandMapWindow_KeyReleaseEvent;
-			FocusOutEvent += CommandMapWindow_FocusOutEvent;
+			KeyReleaseEvent += HandleKeyRelease;
+			FocusOutEvent += HandleFocusOut;
 
 			PintaCore.Tools.ToolAdded += HandleToolAdded;
 			PintaCore.Tools.ToolRemoved += HandleToolRemoved;
@@ -38,14 +38,12 @@ namespace Pinta
 			//tools.Remove (e.Tool.ToolItem);
 		}
 
-		[GLib.ConnectBefore]
-		void CommandMapWindow_FocusOutEvent (object sender, FocusOutEventArgs e)
+		void HandleFocusOut (object sender, FocusOutEventArgs e)
 		{
 			HideAll ();
 		}
 
-		[GLib.ConnectBefore]
-		void CommandMapWindow_KeyReleaseEvent (object sender, KeyReleaseEventArgs e)
+		void HandleKeyRelease (object sender, KeyReleaseEventArgs e)
 		{
 			if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R) {
 				HideAll ();
