@@ -38,12 +38,12 @@ namespace Pinta
 			//tools.Remove (e.Tool.ToolItem);
 		}
 
-		void HandleFocusOut (object sender, FocusOutEventArgs e)
+		private void HandleFocusOut (object sender, FocusOutEventArgs e)
 		{
 			HideAll ();
 		}
 
-		void HandleKeyRelease (object sender, KeyReleaseEventArgs e)
+		private void HandleKeyRelease (object sender, KeyReleaseEventArgs e)
 		{
 			if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R) {
 				HideAll ();
