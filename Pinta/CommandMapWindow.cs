@@ -4,16 +4,23 @@ namespace Pinta
 {
 	public class CommandMapWindow : Window
 	{
-		public CommandMapWindow () : base ("Command Map")
+		public CommandMapWindow (Window parent) : base ("Command Map")
 		{
-			WindowPosition = WindowPosition.Center;
-			SetDefaultSize (200, 200);
+			TransientFor = parent;
 			Decorated = false;
 			Opacity = 0.9;
 			Modal = true;
+			SkipPagerHint = true;
+			SkipTaskbarHint = true;
 
-			Label label = new Label ("Hello");
-			Add (label);
+			VBox box = new VBox ();
+			Add (box);
+
+			Frame frame = new Frame ("Tools");
+			box.PackEnd (frame);
+
+			Button button = new Button ("Hello");
+			frame.Add (button);
 
 			KeyReleaseEvent += CommandMapWindow_KeyReleaseEvent;
 			FocusOutEvent += CommandMapWindow_FocusOutEvent;

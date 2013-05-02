@@ -105,7 +105,7 @@ namespace Pinta
 			PintaCore.Workspace.ActiveDocumentChanged += ActiveDocumentChanged;
 
 			// Set up the Command Map window.
-			cmd_map = new CommandMapWindow ();
+			cmd_map = new CommandMapWindow (window_shell);
 		}
 
 		[GLib.ConnectBefore]
@@ -113,6 +113,7 @@ namespace Pinta
 		{
 			if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R) {
 				System.Console.WriteLine ("Ctrl pressed!");
+				cmd_map.SetPosition (WindowPosition.Center);
 				cmd_map.ShowAll ();
 			}
 
