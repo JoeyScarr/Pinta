@@ -9,16 +9,12 @@ namespace Pinta
 		private HBox tools1;
 		private HBox tools2;
 
-		public CommandMapWindow () : base ("Command Map")
+		public CommandMapWindow (Window parent) : base ("Command Map")
 		{
-			FitScreen ();
-			SetPosition (WindowPosition.Center);
-
+			TransientFor = parent;
+			TypeHint = Gdk.WindowTypeHint.Dialog;
 			Decorated = false;
 			Opacity = 0.9;
-			Modal = true;
-			SkipPagerHint = true;
-			SkipTaskbarHint = true;
 
 			VBox vbox = new VBox ();
 			Add (vbox);
@@ -33,11 +29,6 @@ namespace Pinta
 
 			PintaCore.Tools.ToolAdded += HandleToolAdded;
 			PintaCore.Tools.ToolRemoved += HandleToolRemoved;
-		}
-
-		private void FitScreen ()
-		{
-			//SetDefaultSize (Screen.Width, Screen.Height);
 		}
 
 		private void HandleToolAdded (object sender, ToolEventArgs e)

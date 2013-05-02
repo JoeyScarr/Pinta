@@ -52,7 +52,7 @@ namespace Pinta
 			CreateWindow ();
 
 			// Set up the Command Map window.
-			cmd_map = new CommandMapWindow ();
+			cmd_map = new CommandMapWindow (window_shell);
 
 			// Initialize interface things
 			window_shell.AddAccelGroup (PintaCore.Actions.AccelGroup);
