@@ -129,7 +129,6 @@ namespace Pinta
 		void MainWindow_KeyReleaseEvent (object o, KeyReleaseEventArgs e)
 		{
 			if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R) {
-				System.Console.WriteLine ("Ctrl released!");
 				cmd_map.HideAll ();
 			}
 
