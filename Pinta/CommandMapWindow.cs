@@ -18,6 +18,12 @@ namespace Pinta
 			VBox vbox = new VBox ();
 			Add (vbox);
 
+			// Add the main toolbar.
+			var toolbar = new Toolbar ();
+			PintaCore.Actions.CreateToolBar (toolbar);
+			vbox.Add (toolbar);
+
+			// Add two rows for tools.
 			tools1 = new HBox ();
 			vbox.Add (tools1);
 			tools2 = new HBox ();

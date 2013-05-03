@@ -137,7 +137,7 @@ namespace Pinta.Core
 		{
 			toolbar.AppendItem (new Gtk.SeparatorToolItem ());
 			toolbar.AppendItem (ZoomOut.CreateToolBarItem ());
-			toolbar.AppendItem (ZoomComboBox);
+			//toolbar.AppendItem (ZoomComboBox);
 			toolbar.AppendItem (ZoomIn.CreateToolBarItem ());
 		}
 		
