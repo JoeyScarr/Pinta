@@ -26,7 +26,7 @@ namespace Pinta.Gui.Widgets
 
 		private void HandleClicked (object sender, EventArgs e)
 		{
-			PintaCore.Tools.SetCurrentTool(tool);
+			PintaCore.Tools.SetCurrentTool (tool);
 		}
 	}
 }
