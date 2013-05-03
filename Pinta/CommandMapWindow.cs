@@ -29,6 +29,11 @@ namespace Pinta
 			tools2 = new HBox ();
 			vbox.Add (tools2);
 
+			// Add color palette.
+			var palette = new ColorPaletteWidget (false);
+			palette.Initialize ();
+			vbox.Add (palette);
+
 			PintaCore.Tools.ToolAdded += HandleToolAdded;
 			PintaCore.Tools.ToolRemoved += HandleToolRemoved;
 		}
