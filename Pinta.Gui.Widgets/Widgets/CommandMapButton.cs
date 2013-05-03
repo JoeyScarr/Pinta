@@ -6,13 +6,11 @@ namespace Pinta.Gui.Widgets
 {
 	public class CommandMapButton : Button
 	{
-		private BaseTool tool;
-
-		public BaseTool Tool { get { return tool; } }
+		public BaseTool Tool { get; private set; }
 
 		public CommandMapButton (BaseTool tool)
 		{
-			this.tool = tool;
+			Tool = tool;
 
 			Relief = ReliefStyle.None;
 			TooltipText = tool.ToolTip;
@@ -29,7 +27,7 @@ namespace Pinta.Gui.Widgets
 
 		private void HandleClicked (object sender, EventArgs e)
 		{
-			PintaCore.Tools.SetCurrentTool (tool);
+			PintaCore.Tools.SetCurrentTool (Tool);
 		}
 	}
 }
