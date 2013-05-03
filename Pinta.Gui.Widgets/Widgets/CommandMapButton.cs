@@ -13,6 +13,7 @@ namespace Pinta.Gui.Widgets
 			this.tool = tool;
 
 			Relief = ReliefStyle.None;
+			TooltipText = tool.ToolTip;
 
 			var icon = new Image (PintaCore.Resources.GetIcon (tool.Icon));
 
