@@ -9,11 +9,10 @@ namespace Pinta
 		private HBox tools1;
 		private HBox tools2;
 
-		public CommandMapWindow (Window parent) : base ("Command Map")
+		public CommandMapWindow (Window parent) : base (WindowType.Popup)
 		{
 			TransientFor = parent;
-			TypeHint = Gdk.WindowTypeHint.Dialog;
-			Decorated = false;
+			WindowPosition = WindowPosition.CenterOnParent;
 			Opacity = 0.9;
 
 			VBox vbox = new VBox ();
@@ -23,10 +22,6 @@ namespace Pinta
 			vbox.Add (tools1);
 			tools2 = new HBox ();
 			vbox.Add (tools2);
-
-			KeyPressEvent += HandleKeyPress;
-			KeyReleaseEvent += HandleKeyRelease;
-			FocusOutEvent += HandleFocusOut;
 
 			PintaCore.Tools.ToolAdded += HandleToolAdded;
 			PintaCore.Tools.ToolRemoved += HandleToolRemoved;
@@ -46,23 +41,6 @@ namespace Pinta
 		private void HandleToolRemoved (object sender, ToolEventArgs e)
 		{
 			//tools.Remove (e.Tool.ToolItem);
-		}
-
-		private void HandleFocusOut (object sender, FocusOutEventArgs e)
-		{
-			HideAll ();
-		}
-
-		private void HandleKeyRelease (object sender, KeyReleaseEventArgs e)
-		{
-			if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R) {
-				HideAll ();
-			}
-		}
-
-		private void HandleKeyPress (object sender, KeyPressEventArgs e)
-		{
-			// TODO
 		}
 	}
 }

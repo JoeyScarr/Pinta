@@ -102,6 +102,8 @@ namespace Pinta
 			window_shell.KeyPressEvent += MainWindow_KeyPressEvent;
 			window_shell.KeyReleaseEvent += MainWindow_KeyReleaseEvent;
 
+			window_shell.FocusOutEvent += MainWindow_FocusOutEvent;
+
 			// TODO: These need to be [re]moved when we redo zoom support
 			PintaCore.Actions.View.ZoomToWindow.Activated += new EventHandler (ZoomToWindow_Activated);
 			PintaCore.Actions.View.ZoomToSelection.Activated += new EventHandler (ZoomToSelection_Activated);
@@ -127,6 +129,10 @@ namespace Pinta
 		[GLib.ConnectBefore]
 		void MainWindow_KeyReleaseEvent (object o, KeyReleaseEventArgs e)
 		{
+			if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R) {
+				cmd_map.HideAll ();
+			}
+
 			// Give the Canvas (and by extension the tools)
 			// first shot at handling the event if
 			// the mouse pointer is on the canvas
@@ -134,6 +140,11 @@ namespace Pinta
 			{
 				canvas_pad.Canvas.DoKeyReleaseEvent (o, e);
 			}
+		}
+
+		void MainWindow_FocusOutEvent (object o, EventArgs e)
+		{
+			cmd_map.HideAll ();
 		}
 
 		// Check if the mouse pointer is on the canvas
