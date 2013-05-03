@@ -8,6 +8,8 @@ namespace Pinta.Gui.Widgets
 	{
 		private BaseTool tool;
 
+		public BaseTool Tool { get { return tool; } }
+
 		public CommandMapButton (BaseTool tool)
 		{
 			this.tool = tool;

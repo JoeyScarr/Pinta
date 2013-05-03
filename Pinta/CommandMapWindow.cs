@@ -40,7 +40,19 @@ namespace Pinta
 
 		private void HandleToolRemoved (object sender, ToolEventArgs e)
 		{
-			//tools.Remove (e.Tool.ToolItem);
+			foreach (CommandMapButton button in tools1) {
+				if (button.Tool == e.Tool) {
+					tools1.Remove(button);
+					return;
+				}
+			}
+
+			foreach (CommandMapButton button in tools2) {
+				if (button.Tool == e.Tool) {
+					tools2.Remove(button);
+					return;
+				}
+			}
 		}
 	}
 }
