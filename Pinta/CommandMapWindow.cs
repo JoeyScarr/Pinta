@@ -9,9 +9,9 @@ namespace Pinta
 		private HBox tools1;
 		private HBox tools2;
 
-		public CommandMapWindow (Window parent) : base (WindowType.Popup)
+		public CommandMapWindow () : base (WindowType.Popup)
 		{
-			TransientFor = parent;
+			TransientFor = PintaCore.Chrome.MainWindow;
 			WindowPosition = WindowPosition.CenterOnParent;
 			Opacity = 0.9;
 
