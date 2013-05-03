@@ -40,8 +40,10 @@ namespace Pinta.Gui.Widgets
 		
 		private Gdk.Pixbuf swap_icon;
 		private Palette palette;
+
+		private bool vertical;
 		
-		public ColorPaletteWidget ()
+		public ColorPaletteWidget (bool vertical)
 		{
 			// Insert initialization code here.
 			this.AddEvents ((int)Gdk.EventMask.ButtonPressMask);
@@ -51,6 +53,8 @@ namespace Pinta.Gui.Widgets
 
 			HasTooltip = true;
 			QueryTooltip += HandleQueryTooltip;
+
+			this.vertical = vertical;
 		}
 
 
@@ -165,8 +169,15 @@ namespace Pinta.Gui.Widgets
 					palette.Count : palette.Count + 3 - (palette.Count % 3);
 				
 				for (int i = 0; i < palette.Count; i++) {
-					int x = 7 + 15 * (i / (roundedCount / 3));
-					int y = 60 +15 * (i % (roundedCount / 3));
+					int x, y;
+
+					if (vertical) {
+						x = 7 + 15 * (i / (roundedCount / 3));
+						y = 60 +15 * (i % (roundedCount / 3));
+					} else {
+						x = 60 +15 * (i % (roundedCount / 3));
+						y = 7 + 15 * (i / (roundedCount / 3));
+					}
 					
 					g.FillRectangle (new Rectangle (x, y, 15, 15), palette[i]);
 				}
@@ -178,17 +189,28 @@ namespace Pinta.Gui.Widgets
 		protected override void OnSizeRequested (ref Gtk.Requisition requisition)
 		{
 			// Calculate desired size here.
-			requisition.Height = 305;
-			requisition.Width = 60;
+			if (vertical) {
+				requisition.Height = 305;
+				requisition.Width = 60;
+			} else {
+				requisition.Height = 60;
+				requisition.Width = 305;
+			}
 		}
 		
 		private int PointToPalette (int x, int y)
 		{
+			if (!vertical) {
+				int temp = x;
+				x = y;
+				y = temp;
+			}
+
 			int col = -1;
 			int row = 0;
 			int roundedCount = (palette.Count % 3 == 0) ?
-					palette.Count : palette.Count + 3 - (palette.Count % 3);
-			
+				palette.Count : palette.Count + 3 - (palette.Count % 3);
+
 			if (x >= 7 && x < 22)
 				col = 0;
 			else if (x >= 22 && x < 38)
@@ -197,12 +219,18 @@ namespace Pinta.Gui.Widgets
 				col = (roundedCount / 3) * 2;
 			else
 				return -1;
-			
+
 			if (y < 60 || y > 60 + ((roundedCount / 3) * 15))
 				return -1;
-			
+
 			row = (y - 60) / 15;
-			
+
+			if (!vertical) {
+				int temp = col;
+				col = row;
+				row = temp;
+			}
+
 			return (col + row >= palette.Count) ? -1 : col + row;
 		}
 

@@ -37,7 +37,7 @@ namespace Pinta
 		public void Initialize (DockFrame workspace, Menu padMenu)
 		{
 			DockItem palette_item = workspace.AddItem ("Palette");
-			ColorPaletteWidget palette = new ColorPaletteWidget () { Name = "palette" };
+			ColorPaletteWidget palette = new ColorPaletteWidget (true) { Name = "palette" };
 
 			palette_item.Label = Catalog.GetString ("Palette");
 			palette_item.Content = palette;
