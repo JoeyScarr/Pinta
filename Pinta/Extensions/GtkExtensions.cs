@@ -45,21 +45,6 @@ namespace Pinta
 			return item;
 		}
 
-		public static Gtk.Button CreateButton (this Gtk.Action action)
-		{
-			var button = new Button ();
-			action.ConnectProxy (button);
-
-			button.Relief = ReliefStyle.None;
-			button.TooltipText = action.Label;
-			button.Label = action.Label;
-			button.Image = new Image (action.StockId, IconSize.Button);
-			button.ImagePosition = PositionType.Top;
-			button.Image.Show ();
-
-			return button;
-		}
-
 		public static Gtk.ToolItem CreateToolBarItem (this Gtk.Action action)
 		{
 			Gtk.ToolItem item = (Gtk.ToolItem)action.CreateToolItem ();

@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using System;
+using Gtk;
 using Mono.Unix;
 
 namespace Pinta.Core
@@ -87,7 +88,25 @@ namespace Pinta.Core
 			menu.AppendSeparator ();
 			menu.Append (Flatten.CreateAcceleratedMenuItem (Gdk.Key.F, Gdk.ModifierType.ControlMask | Gdk.ModifierType.ShiftMask));
 		}
-				
+
+		public void CreateCropCommandMapBox (Gtk.HBox box)
+		{
+			box.Add (CropToSelection.CreateButton ());
+			box.Add (AutoCrop.CreateButton ());
+			box.Add (Resize.CreateButton ());
+			box.Add (CanvasSize.CreateButton ());
+		}
+
+		public void CreateTransformCommandMapBox (Gtk.HBox box)
+		{
+			box.Add (FlipHorizontal.CreateButton ());
+			box.Add (FlipVertical.CreateButton ());
+			box.Add (new SeparatorToolItem ());
+			box.Add (RotateCW.CreateButton ());
+			box.Add (RotateCCW.CreateButton ());
+			box.Add (Rotate180.CreateButton ());
+		}
+
 		public void RegisterHandlers ()
 		{
 			FlipHorizontal.Activated += HandlePintaCoreActionsImageFlipHorizontalActivated;

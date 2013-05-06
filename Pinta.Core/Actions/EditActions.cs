@@ -130,6 +130,36 @@ namespace Pinta.Core
 			palette_menu.Append (ResizePalette.CreateMenuItem ());
 		}
 
+		public void CreateEditCommandMapBox (Gtk.HBox box)
+		{
+			box.Add (Undo.CreateButton ());
+			box.Add (Redo.CreateButton ());
+			box.Add (new SeparatorToolItem ());
+			box.Add (Cut.CreateButton ());
+			box.Add (Copy.CreateButton ());
+			box.Add (CopyMerged.CreateButton ());
+			box.Add (Paste.CreateButton ());
+			box.Add (PasteIntoNewLayer.CreateButton ());
+			box.Add (PasteIntoNewImage.CreateButton ());
+		}
+
+		public void CreateSelectionCommandMapBox (Gtk.HBox box)
+		{
+			box.Add (SelectAll.CreateButton ());
+			box.Add (Deselect.CreateButton ());
+			box.Add (EraseSelection.CreateButton ());
+			box.Add (FillSelection.CreateButton ());
+			box.Add (InvertSelection.CreateButton ());
+		}
+		
+		public void CreatePaletteCommandMapBox (Gtk.HBox box)
+		{
+			box.Add (LoadPalette.CreateButton ());
+			box.Add (SavePalette.CreateButton ());
+			box.Add (ResetPalette.CreateButton ());
+			box.Add (ResizePalette.CreateButton ());
+		}
+
 		public void CreateHistoryWindowToolBar (Gtk.Toolbar toolbar)
 		{
 			toolbar.AppendItem (Undo.CreateToolBarItem ());

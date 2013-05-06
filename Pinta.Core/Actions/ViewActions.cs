@@ -132,12 +132,21 @@ namespace Pinta.Core
 			menu.AppendSeparator ();
 			menu.Append (show_pad);
 		}
-		
+
+		public void CreateZoomCommandMapBox (Gtk.HBox box)
+		{
+			box.Add (ZoomIn.CreateButton ());
+			box.Add (ZoomOut.CreateButton ());
+			box.Add (ActualSize.CreateButton ());
+			box.Add (ZoomToWindow.CreateButton ());
+			box.Add (Fullscreen.CreateButton ());
+		}
+
 		public void CreateToolBar (Gtk.Toolbar toolbar)
 		{
 			toolbar.AppendItem (new Gtk.SeparatorToolItem ());
 			toolbar.AppendItem (ZoomOut.CreateToolBarItem ());
-			//toolbar.AppendItem (ZoomComboBox);
+			toolbar.AppendItem (ZoomComboBox);
 			toolbar.AppendItem (ZoomIn.CreateToolBarItem ());
 		}
 		

@@ -18,11 +18,30 @@ namespace Pinta
 			VBox vbox = new VBox ();
 			Add (vbox);
 
-			// Add the main toolbar.
-			var main = new HBox ();
-			main.Add (PintaCore.Actions.File.New.CreateButton ());
+			// Add the main toolbars.
+			HBox main1 = new HBox ();
+			PintaCore.Actions.File.CreateCommandMapBox (main1);
+			main1.Add (new SeparatorToolItem ());
+			PintaCore.Actions.Edit.CreateEditCommandMapBox (main1);
+			vbox.Add (main1);
 
-			vbox.Add (main);
+			HBox main2 = new HBox ();
+			PintaCore.Actions.Edit.CreateSelectionCommandMapBox (main2);
+			main2.Add (new SeparatorToolItem ());
+			PintaCore.Actions.Image.CreateCropCommandMapBox (main2);
+			vbox.Add (main2);
+
+			HBox main3 = new HBox ();
+			PintaCore.Actions.View.CreateZoomCommandMapBox (main3);
+			main3.Add (new SeparatorToolItem ());
+			PintaCore.Actions.Image.CreateTransformCommandMapBox (main3);
+			vbox.Add (main3);
+
+			HBox main4 = new HBox ();
+			PintaCore.Actions.Layers.CreateLayerCommandMapBox (main4);
+			main4.Add (new SeparatorToolItem ());
+			PintaCore.Actions.Layers.CreateLayerTransformCommandMapBox (main4);
+			vbox.Add (main4);
 
 			// Add two rows for tools.
 			tools1 = new HBox ();
@@ -31,9 +50,13 @@ namespace Pinta
 			vbox.Add (tools2);
 
 			// Add color palette.
+			var paletteBox = new HBox ();
 			var palette = new ColorPaletteWidget (false);
 			palette.Initialize ();
-			vbox.Add (palette);
+			paletteBox.Add (palette);
+			paletteBox.Add (new SeparatorToolItem ());
+			PintaCore.Actions.Edit.CreatePaletteCommandMapBox (paletteBox);
+			vbox.Add (paletteBox);
 
 			PintaCore.Tools.ToolAdded += HandleToolAdded;
 			PintaCore.Tools.ToolRemoved += HandleToolRemoved;
