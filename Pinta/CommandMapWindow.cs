@@ -19,15 +19,10 @@ namespace Pinta
 			Add (vbox);
 
 			// Add the main toolbar.
-			var toolbar = new Toolbar ();
+			var main = new HBox ();
+			main.Add (PintaCore.Actions.File.New.CreateButton ());
 
-			if (PintaCore.System.OperatingSystem == OS.Windows) {
-				toolbar.ToolbarStyle = ToolbarStyle.Icons;
-				toolbar.IconSize = IconSize.SmallToolbar;
-			}
-
-			PintaCore.Actions.CreateToolBar (toolbar);
-			vbox.Add (toolbar);
+			vbox.Add (main);
 
 			// Add two rows for tools.
 			tools1 = new HBox ();
