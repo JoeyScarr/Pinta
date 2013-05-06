@@ -20,6 +20,12 @@ namespace Pinta
 
 			// Add the main toolbar.
 			var toolbar = new Toolbar ();
+
+			if (PintaCore.System.OperatingSystem == OS.Windows) {
+				toolbar.ToolbarStyle = ToolbarStyle.Icons;
+				toolbar.IconSize = IconSize.SmallToolbar;
+			}
+
 			PintaCore.Actions.CreateToolBar (toolbar);
 			vbox.Add (toolbar);
 
