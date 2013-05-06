@@ -74,6 +74,8 @@ namespace Pinta
 
 			PintaCore.Initialize ();
 
+			PintaCore.Chrome.InitializeAdjustmentsCommandMapBox (cmd_map.AdjustmentsCommandMapBox);
+
 			// Initialize extensions
 			AddinManager.Initialize ();
 			AddinManager.Registry.Update ();

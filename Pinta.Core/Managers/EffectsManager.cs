@@ -65,6 +65,8 @@ namespace Pinta.Core
 			
 			PintaCore.Actions.Adjustments.Actions.Add (act);
 
+			PintaCore.Chrome.AdjustmentsCommandMapBox.Add (act.CreateButton ());
+
 			// Create a menu item for each adjustment
 			MenuItem menu_item;
 			

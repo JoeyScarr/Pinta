@@ -9,6 +9,8 @@ namespace Pinta
 		private HBox tools1;
 		private HBox tools2;
 
+		public HBox AdjustmentsCommandMapBox { get; private set; }
+
 		public CommandMapWindow () : base (WindowType.Popup)
 		{
 			TransientFor = PintaCore.Chrome.MainWindow;
@@ -42,6 +44,9 @@ namespace Pinta
 			main4.Add (new SeparatorToolItem ());
 			PintaCore.Actions.Layers.CreateLayerTransformCommandMapBox (main4);
 			vbox.Add (main4);
+
+			AdjustmentsCommandMapBox = new HBox ();
+			vbox.Add (AdjustmentsCommandMapBox);
 
 			// Add two rows for tools.
 			tools1 = new HBox ();
