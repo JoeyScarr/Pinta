@@ -38,12 +38,14 @@ namespace Pinta.Core
 	{
 		private Dictionary<BaseEffect, Gtk.Action> adjustments;
 		private Dictionary<BaseEffect, MenuItem> adjustment_menuitems;
+		private Dictionary<BaseEffect, Button> adjustment_command_map_buttons;
 		private Dictionary<BaseEffect, Gtk.Action> effects;
 
 		internal EffectsManager ()
 		{
 			adjustments = new Dictionary<BaseEffect, Gtk.Action> ();
-			adjustment_menuitems = new Dictionary<BaseEffect,MenuItem> ();
+			adjustment_menuitems = new Dictionary<BaseEffect, MenuItem> ();
+			adjustment_command_map_buttons = new Dictionary<BaseEffect, Button> ();
 			effects = new Dictionary<BaseEffect, Gtk.Action> ();
 		}
 
@@ -65,7 +67,8 @@ namespace Pinta.Core
 			
 			PintaCore.Actions.Adjustments.Actions.Add (act);
 
-			PintaCore.Chrome.AdjustmentsCommandMapBox.Add (act.CreateButton ());
+			var button = act.CreateButton ();
+			PintaCore.Chrome.AdjustmentsCommandMapBox.Add (button);
 
 			// Create a menu item for each adjustment
 			MenuItem menu_item;
@@ -80,6 +83,7 @@ namespace Pinta.Core
 
 			adjustments.Add (adjustment, act);
 			adjustment_menuitems.Add (adjustment, menu_item);
+			adjustment_command_map_buttons.Add (adjustment, button);
 
 			return act;
 		}
@@ -135,9 +139,11 @@ namespace Pinta.Core
 
 					var action = adjustments[adjustment];
 					var menu_item = adjustment_menuitems[adjustment];
+					var button = adjustment_command_map_buttons[adjustment];
 
 					adjustments.Remove (adjustment);
 					PintaCore.Actions.Adjustments.Actions.Remove (action);
+					PintaCore.Chrome.AdjustmentsCommandMapBox.Remove (button);
 
 					((Menu)((ImageMenuItem)PintaCore.Chrome.MainMenu.Children[5]).Submenu).Remove (menu_item);
 					return;
