@@ -34,6 +34,8 @@ namespace Pinta.Core
 	{
 		private Menu effects_menu;
 		private Dictionary<Gtk.Action, MenuItem> menu_items;
+		private Dictionary<string, HBox> command_map_boxes;
+		private Dictionary<Gtk.Action, Button> command_map_buttons;
 
 		public Dictionary<string, Gtk.Menu> Menus { get; private set; }
 		public List<Gtk.Action> Actions { get; private set; }
@@ -43,6 +45,8 @@ namespace Pinta.Core
 			Actions = new List<Gtk.Action> ();
 			Menus = new Dictionary<string,Menu> ();
 			menu_items = new Dictionary<Gtk.Action, MenuItem> ();
+			command_map_boxes = new Dictionary<string, HBox> ();
+			command_map_buttons = new Dictionary<Gtk.Action, Button> ();
 		}
 		
 		#region Initialization
@@ -59,26 +63,43 @@ namespace Pinta.Core
 				
 				Menus.Add (category, category_menu);
 			}
+
+			if (!command_map_boxes.ContainsKey (category)) {
+				command_map_boxes[category] = new HBox ();
+				PintaCore.Chrome.EffectsCommandMapBox.Add (command_map_boxes[category]);
+			}
 			
 			Actions.Add (action);
 			var menu_item = (MenuItem)action.CreateMenuItem ();
+			var button = action.CreateButton ();
 
 			Menu m = Menus[category];
 			m.AppendMenuItemSorted (menu_item);
 
+			HBox box = command_map_boxes[category];
+			box.Add (button);
+
 			menu_items.Add (action, menu_item);
+			command_map_buttons.Add (action, button);
 		}
 
-		// TODO: Remove menu category if empty
+		// TODO: Remove category if empty
 		internal void RemoveEffect (string category, Gtk.Action action)
 		{
 			if (!Menus.ContainsKey (category))
 				return;
 			if (!menu_items.ContainsKey (action))
 				return;
+			if (!command_map_boxes.ContainsKey (category))
+				return;
+			if (!command_map_buttons.ContainsKey (action))
+				return;
 
 			var menu = Menus[category];
 			menu.Remove (menu_items[action]);
+
+			var box = command_map_boxes[category];
+			box.Remove (command_map_buttons[action]);
 		}
 		#endregion
 

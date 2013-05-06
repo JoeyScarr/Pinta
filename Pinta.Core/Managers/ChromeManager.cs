@@ -48,6 +48,7 @@ namespace Pinta.Core
 		public IProgressDialog ProgressDialog { get { return progress_dialog; } }
 		public MenuBar MainMenu { get { return main_menu; } }
 		public HBox AdjustmentsCommandMapBox { get; private set; }
+		public VBox EffectsCommandMapBox { get; private set; }
 		
 		public ChromeManager ()
 		{
@@ -81,6 +82,11 @@ namespace Pinta.Core
 		public void InitializeAdjustmentsCommandMapBox (HBox box)
 		{
 			AdjustmentsCommandMapBox = box;
+		}
+
+		public void InitializeEffectsCommandMapBox (VBox box)
+		{
+			EffectsCommandMapBox = box;
 		}
 
 		public void InitializeToolToolBar (Toolbar toolToolBar)

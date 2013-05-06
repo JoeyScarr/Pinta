@@ -10,6 +10,7 @@ namespace Pinta
 		private HBox tools2;
 
 		public HBox AdjustmentsCommandMapBox { get; private set; }
+		public VBox EffectsCommandMapBox { get; private set; }
 
 		public CommandMapWindow () : base (WindowType.Popup)
 		{
@@ -63,6 +64,10 @@ namespace Pinta
 			// Add adjustments.
 			AdjustmentsCommandMapBox = new HBox ();
 			vbox.Add (AdjustmentsCommandMapBox);
+
+			// Add effects.
+			EffectsCommandMapBox = new VBox ();
+			vbox.Add (EffectsCommandMapBox);
 
 			PintaCore.Tools.ToolAdded += HandleToolAdded;
 			PintaCore.Tools.ToolRemoved += HandleToolRemoved;
