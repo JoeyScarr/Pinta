@@ -45,9 +45,6 @@ namespace Pinta
 			PintaCore.Actions.Layers.CreateLayerTransformCommandMapBox (main4);
 			vbox.Add (main4);
 
-			AdjustmentsCommandMapBox = new HBox ();
-			vbox.Add (AdjustmentsCommandMapBox);
-
 			// Add two rows for tools.
 			tools1 = new HBox ();
 			vbox.Add (tools1);
@@ -62,6 +59,10 @@ namespace Pinta
 			paletteBox.Add (new SeparatorToolItem ());
 			PintaCore.Actions.Edit.CreatePaletteCommandMapBox (paletteBox);
 			vbox.Add (paletteBox);
+
+			// Add adjustments.
+			AdjustmentsCommandMapBox = new HBox ();
+			vbox.Add (AdjustmentsCommandMapBox);
 
 			PintaCore.Tools.ToolAdded += HandleToolAdded;
 			PintaCore.Tools.ToolRemoved += HandleToolRemoved;
