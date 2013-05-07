@@ -23,51 +23,53 @@ namespace Pinta
 
 			// Add the main toolbars.
 			HBox main1 = new HBox ();
-			PintaCore.Actions.File.CreateCommandMapBox (main1);
-			main1.Add (new SeparatorToolItem ());
+			PintaCore.Actions.File.CreateFileCommandMapBox (main1);
 			PintaCore.Actions.Edit.CreateEditCommandMapBox (main1);
 			vbox.Add (main1);
 
 			HBox main2 = new HBox ();
 			PintaCore.Actions.Edit.CreateSelectionCommandMapBox (main2);
-			main2.Add (new SeparatorToolItem ());
 			PintaCore.Actions.Image.CreateCropCommandMapBox (main2);
 			vbox.Add (main2);
 
 			HBox main3 = new HBox ();
 			PintaCore.Actions.View.CreateZoomCommandMapBox (main3);
-			main3.Add (new SeparatorToolItem ());
 			PintaCore.Actions.Image.CreateTransformCommandMapBox (main3);
 			vbox.Add (main3);
 
 			HBox main4 = new HBox ();
 			PintaCore.Actions.Layers.CreateLayerCommandMapBox (main4);
-			main4.Add (new SeparatorToolItem ());
 			PintaCore.Actions.Layers.CreateLayerTransformCommandMapBox (main4);
 			vbox.Add (main4);
 
 			// Add two rows for tools.
+			var toolsFrame = new Frame ("Tools");
+			var toolsBox = new VBox ();
 			tools1 = new HBox ();
-			vbox.Add (tools1);
+			toolsBox.Add (tools1);
 			tools2 = new HBox ();
-			vbox.Add (tools2);
+			toolsBox.Add (tools2);
+			toolsFrame.Add (toolsBox);
+			vbox.Add (toolsFrame);
 
 			// Add color palette.
 			var paletteBox = new HBox ();
 			var palette = new ColorPaletteWidget (false);
 			palette.Initialize ();
-			paletteBox.Add (palette);
-			paletteBox.Add (new SeparatorToolItem ());
-			PintaCore.Actions.Edit.CreatePaletteCommandMapBox (paletteBox);
+			PintaCore.Actions.Edit.CreatePaletteCommandMapBox (paletteBox, palette);
 			vbox.Add (paletteBox);
 
 			// Add adjustments.
+			var adjustmentsFrame = new Frame ("Adjustments");
 			AdjustmentsCommandMapBox = new HBox ();
-			vbox.Add (AdjustmentsCommandMapBox);
+			adjustmentsFrame.Add (AdjustmentsCommandMapBox);
+			vbox.Add (adjustmentsFrame);
 
 			// Add effects.
+			var effectsFrame = new Frame ("Effects");
 			EffectsCommandMapBox = new VBox ();
-			vbox.Add (EffectsCommandMapBox);
+			effectsFrame.Add (EffectsCommandMapBox);
+			vbox.Add (effectsFrame);
 
 			PintaCore.Tools.ToolAdded += HandleToolAdded;
 			PintaCore.Tools.ToolRemoved += HandleToolRemoved;

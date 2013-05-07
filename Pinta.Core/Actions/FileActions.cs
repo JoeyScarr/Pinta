@@ -93,15 +93,20 @@ namespace Pinta.Core
 			menu.Append (Exit.CreateAcceleratedMenuItem (Gdk.Key.Q, Gdk.ModifierType.ControlMask));
 		}
 
-		public void CreateCommandMapBox (Gtk.HBox box)
+		public void CreateFileCommandMapBox (Gtk.HBox mainBox)
 		{
+			var frame = new Frame ("File");
+			var box = new HBox ();
+
 			box.Add (New.CreateButton ());
 			box.Add (NewScreenshot.CreateButton ());
 			box.Add (Open.CreateButton ());
-			box.Add (new SeparatorToolItem ());
 			box.Add (Save.CreateButton ());
 			box.Add (SaveAs.CreateButton ());
 			box.Add (Print.CreateButton ());
+
+			frame.Add (box);
+			mainBox.Add (frame);
 
 			// It seems like a bad idea to have Close and Exit in the command map.
 			//box.Add (new SeparatorToolItem ());
