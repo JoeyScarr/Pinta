@@ -9,6 +9,7 @@ namespace Pinta
 		private HBox tools1;
 		private HBox tools2;
 
+		public HBox ToolToolbarBox { get; private set; }
 		public HBox AdjustmentsCommandMapBox { get; private set; }
 		public VBox EffectsCommandMapBox { get; private set; }
 
@@ -49,9 +50,11 @@ namespace Pinta
 			PintaCore.Actions.Layers.CreateLayerTransformCommandMapBox (main4);
 			vbox.Add (main4);
 
-			// Add two rows for tools.
+			// Add rows for tools and box for tool toolbar.
 			var toolsFrame = new Frame ("Tools");
 			var toolsBox = new VBox ();
+			ToolToolbarBox = new HBox ();
+			toolsBox.Add (ToolToolbarBox);
 			tools1 = new HBox ();
 			toolsBox.Add (tools1);
 			tools2 = new HBox ();
