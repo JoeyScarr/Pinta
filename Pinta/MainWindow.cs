@@ -358,6 +358,11 @@ namespace Pinta
 			PintaCore.System.LastDialogDirectory = PintaCore.Settings.GetSetting (LastDialogDirSettingKey,
 			                                                                      PintaCore.System.DefaultDialogDirectory);
 
+			if (!PintaCore.Actions.View.ToolBar.Active)
+			{
+				PintaCore.Chrome.MainToolBar.HideAll ();
+			}
+
 			var ruler_metric = (MetricType) PintaCore.Settings.GetSetting ("ruler-metric", (int) MetricType.Pixels);
 
 			switch (ruler_metric) {
