@@ -18,26 +18,32 @@ namespace Pinta
 			WindowPosition = WindowPosition.CenterOnParent;
 			Opacity = 0.9;
 
+			var frame = new Frame ();
 			VBox vbox = new VBox ();
-			Add (vbox);
+			frame.Add (vbox);
+			Add (frame);
 
 			// Add the main toolbars.
 			HBox main1 = new HBox ();
+			main1.Spacing = 5;
 			PintaCore.Actions.File.CreateFileCommandMapBox (main1);
 			PintaCore.Actions.Edit.CreateEditCommandMapBox (main1);
 			vbox.Add (main1);
 
 			HBox main2 = new HBox ();
+			main2.Spacing = 5;
 			PintaCore.Actions.Edit.CreateSelectionCommandMapBox (main2);
 			PintaCore.Actions.Image.CreateCropCommandMapBox (main2);
 			vbox.Add (main2);
 
 			HBox main3 = new HBox ();
+			main3.Spacing = 5;
 			PintaCore.Actions.View.CreateZoomCommandMapBox (main3);
 			PintaCore.Actions.Image.CreateTransformCommandMapBox (main3);
 			vbox.Add (main3);
 
 			HBox main4 = new HBox ();
+			main4.Spacing = 5;
 			PintaCore.Actions.Layers.CreateLayerCommandMapBox (main4);
 			PintaCore.Actions.Layers.CreateLayerTransformCommandMapBox (main4);
 			vbox.Add (main4);
