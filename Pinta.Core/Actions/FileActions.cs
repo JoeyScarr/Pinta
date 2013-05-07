@@ -103,15 +103,24 @@ namespace Pinta.Core
 			box.Add (Open.CreateButton ());
 			box.Add (Save.CreateButton ());
 			box.Add (SaveAs.CreateButton ());
+			box.Add (PintaCore.Actions.Window.SaveAll.CreateButton ());
 			box.Add (Print.CreateButton ());
 
 			frame.Add (box);
 			mainBox.Add (frame);
+		}
 
-			// It seems like a bad idea to have Close and Exit in the command map.
-			//box.Add (new SeparatorToolItem ());
-			//box.Add (Close.CreateButton ());
-			//box.Add (Exit.CreateButton ());
+		public void CreateQuitCommandMapBox (Gtk.HBox mainBox)
+		{
+			var frame = new Frame ("Quit");
+			var box = new HBox ();
+
+			box.Add (Close.CreateButton ());
+			box.Add (PintaCore.Actions.Window.CloseAll.CreateButton ());
+			box.Add (Exit.CreateButton ());
+
+			frame.Add (box);
+			mainBox.Add (frame);
 		}
 		
 		public void RegisterHandlers ()

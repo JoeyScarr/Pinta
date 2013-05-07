@@ -110,7 +110,6 @@ namespace Pinta.Core
 
 			box.Add (FlipHorizontal.CreateButton ());
 			box.Add (FlipVertical.CreateButton ());
-			box.Add (new SeparatorToolItem ());
 			box.Add (RotateCW.CreateButton ());
 			box.Add (RotateCCW.CreateButton ());
 			box.Add (Rotate180.CreateButton ());

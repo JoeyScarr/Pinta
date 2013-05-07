@@ -98,7 +98,7 @@ namespace Pinta.Core
 		{
 			MenuItem show_pad = (MenuItem)menu.Children[0];
 			menu.Remove (show_pad);
-			
+
 			menu.Append (ToolBar.CreateMenuItem ());
 			menu.Append (PixelGrid.CreateMenuItem ());
 			menu.Append (Rulers.CreateMenuItem ());

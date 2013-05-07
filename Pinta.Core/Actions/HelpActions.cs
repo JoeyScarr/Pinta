@@ -62,6 +62,20 @@ namespace Pinta.Core
 			menu.AppendSeparator ();
 			menu.Append (About.CreateMenuItem ());
 		}
+
+		public void CreateHelpCommandMapBox (Gtk.HBox mainBox)
+		{
+			var frame = new Frame ("Help");
+			var box = new HBox ();
+
+			box.Add (Website.CreateButton ());
+			box.Add (Bugs.CreateButton ());
+			box.Add (Translate.CreateButton ());
+			box.Add (About.CreateButton ());
+
+			frame.Add (box);
+			mainBox.Add (frame);
+		}
 		
 		public void RegisterHandlers ()
 		{

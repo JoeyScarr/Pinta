@@ -137,7 +137,6 @@ namespace Pinta.Core
 
 			box.Add (Undo.CreateButton ());
 			box.Add (Redo.CreateButton ());
-			box.Add (new SeparatorToolItem ());
 			box.Add (Cut.CreateButton ());
 			box.Add (Copy.CreateButton ());
 			box.Add (CopyMerged.CreateButton ());
@@ -170,7 +169,6 @@ namespace Pinta.Core
 			var box = new HBox ();
 
 			box.Add (palette);
-			box.Add (new SeparatorToolItem ());
 			box.Add (LoadPalette.CreateButton ());
 			box.Add (SavePalette.CreateButton ());
 			box.Add (ResetPalette.CreateButton ());

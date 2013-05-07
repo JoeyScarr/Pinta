@@ -85,6 +85,13 @@ namespace Pinta
 			effectsFrame.Add (EffectsCommandMapBox);
 			vbox.Add (effectsFrame);
 
+			// Add quit and help frames.
+			HBox main5 = new HBox ();
+			main5.Spacing = 5;
+			PintaCore.Actions.File.CreateQuitCommandMapBox (main5);
+			PintaCore.Actions.Help.CreateHelpCommandMapBox (main5);
+			vbox.Add (main5);
+
 			PintaCore.Tools.ToolAdded += HandleToolAdded;
 			PintaCore.Tools.ToolRemoved += HandleToolRemoved;
 		}
