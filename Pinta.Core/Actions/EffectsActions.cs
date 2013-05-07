@@ -36,6 +36,7 @@ namespace Pinta.Core
 		private Dictionary<Gtk.Action, MenuItem> menu_items;
 		private List<HBox> command_map_boxes;
 		private Dictionary<Gtk.Action, Button> command_map_buttons;
+		private Dictionary<Gtk.Action, HBox> command_map_button_boxes;
 
 		public Dictionary<string, Gtk.Menu> Menus { get; private set; }
 		public List<Gtk.Action> Actions { get; private set; }
@@ -47,6 +48,7 @@ namespace Pinta.Core
 			menu_items = new Dictionary<Gtk.Action, MenuItem> ();
 			command_map_boxes = new List<HBox> ();
 			command_map_buttons = new Dictionary<Gtk.Action, Button> ();
+			command_map_button_boxes = new Dictionary<Gtk.Action, HBox> ();
 		}
 		
 		#region Initialization
@@ -94,6 +96,7 @@ namespace Pinta.Core
 			Menu m = Menus[category];
 			m.AppendMenuItemSorted (menu_item);
 
+			command_map_button_boxes[action] = command_map_box;
 			command_map_box.Add (button);
 
 			menu_items.Add (action, menu_item);
@@ -107,16 +110,22 @@ namespace Pinta.Core
 				return;
 			if (!menu_items.ContainsKey (action))
 				return;
-			//if (!command_map_boxes.ContainsKey (category))
-				//return;
-			//if (!command_map_buttons.ContainsKey (action))
-				//return;
+			if (!command_map_buttons.ContainsKey (action))
+				return;
 
 			var menu = Menus[category];
 			menu.Remove (menu_items[action]);
 
-			//var box = command_map_boxes[category];
-			//box.Remove (command_map_buttons[action]);
+			var box = command_map_button_boxes[action];
+			box.Remove (command_map_buttons[action]);
+			command_map_buttons.Remove (action);
+			command_map_button_boxes.Remove (action);
+
+			if (box.Children.Length == 0)
+			{
+				command_map_boxes.Remove (box);
+				PintaCore.Chrome.EffectsCommandMapBox.Remove (box);
+			}
 		}
 		#endregion
 
