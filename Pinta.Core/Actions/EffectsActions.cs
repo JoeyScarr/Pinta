@@ -34,7 +34,7 @@ namespace Pinta.Core
 	{
 		private Menu effects_menu;
 		private Dictionary<Gtk.Action, MenuItem> menu_items;
-		private Dictionary<string, HBox> command_map_boxes;
+		private List<HBox> command_map_boxes;
 		private Dictionary<Gtk.Action, Button> command_map_buttons;
 
 		public Dictionary<string, Gtk.Menu> Menus { get; private set; }
@@ -45,7 +45,7 @@ namespace Pinta.Core
 			Actions = new List<Gtk.Action> ();
 			Menus = new Dictionary<string,Menu> ();
 			menu_items = new Dictionary<Gtk.Action, MenuItem> ();
-			command_map_boxes = new Dictionary<string, HBox> ();
+			command_map_boxes = new List<HBox> ();
 			command_map_buttons = new Dictionary<Gtk.Action, Button> ();
 		}
 		
@@ -64,9 +64,27 @@ namespace Pinta.Core
 				Menus.Add (category, category_menu);
 			}
 
-			if (!command_map_boxes.ContainsKey (category)) {
-				command_map_boxes[category] = new HBox ();
-				PintaCore.Chrome.EffectsCommandMapBox.Add (command_map_boxes[category]);
+			HBox command_map_box;
+
+			if (command_map_boxes.Count > 0)
+			{
+				var last_box = command_map_boxes[command_map_boxes.Count - 1];
+
+				const int widgets_per_box = 10;
+				if (last_box.Children.Length == widgets_per_box)
+				{
+					last_box = new HBox ();
+					command_map_boxes.Add (last_box);
+					PintaCore.Chrome.EffectsCommandMapBox.Add (last_box);
+				}
+
+				command_map_box = last_box;
+			}
+			else
+			{
+				command_map_box = new HBox ();
+				command_map_boxes.Add (command_map_box);
+				PintaCore.Chrome.EffectsCommandMapBox.Add (command_map_box);
 			}
 			
 			Actions.Add (action);
@@ -76,8 +94,7 @@ namespace Pinta.Core
 			Menu m = Menus[category];
 			m.AppendMenuItemSorted (menu_item);
 
-			HBox box = command_map_boxes[category];
-			box.Add (button);
+			command_map_box.Add (button);
 
 			menu_items.Add (action, menu_item);
 			command_map_buttons.Add (action, button);
@@ -90,16 +107,16 @@ namespace Pinta.Core
 				return;
 			if (!menu_items.ContainsKey (action))
 				return;
-			if (!command_map_boxes.ContainsKey (category))
-				return;
-			if (!command_map_buttons.ContainsKey (action))
-				return;
+			//if (!command_map_boxes.ContainsKey (category))
+				//return;
+			//if (!command_map_buttons.ContainsKey (action))
+				//return;
 
 			var menu = Menus[category];
 			menu.Remove (menu_items[action]);
 
-			var box = command_map_boxes[category];
-			box.Remove (command_map_buttons[action]);
+			//var box = command_map_boxes[category];
+			//box.Remove (command_map_buttons[action]);
 		}
 		#endregion
 
