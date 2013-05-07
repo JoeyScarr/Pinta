@@ -20,6 +20,7 @@ namespace Pinta
 
 			var frame = new Frame ();
 			VBox vbox = new VBox ();
+			vbox.BorderWidth = 5;
 			frame.Add (vbox);
 			Add (frame);
 
