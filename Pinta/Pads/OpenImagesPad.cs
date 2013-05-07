@@ -41,6 +41,7 @@ namespace Pinta
 			open_images_item.Label = Catalog.GetString ("Images");
 			open_images_item.Content = new OpenImagesListWidget ();
 			open_images_item.Icon = PintaCore.Resources.GetIcon ("Menu.Effects.Default.png");
+			open_images_item.Behavior |= DockItemBehavior.CantClose;
 
 			ToggleAction show_open_images = padMenu.AppendToggleAction ("Images", Catalog.GetString ("Images"), null, null);
 
