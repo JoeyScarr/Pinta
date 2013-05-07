@@ -60,10 +60,14 @@ namespace Pinta
 
 			// Add color palette.
 			var paletteBox = new HBox ();
+			paletteBox.Spacing = 5;
 			var palette = new ColorPaletteWidget (false);
 			palette.Initialize ();
 			PintaCore.Actions.Edit.CreatePaletteCommandMapBox (paletteBox, palette);
 			vbox.Add (paletteBox);
+
+			// Add add-ins manager on same line as palette.
+			PintaCore.Actions.Addins.CreateAddinsCommandMapBox (paletteBox);
 
 			// Add adjustments.
 			var adjustmentsFrame = new Frame ("Adjustments");
