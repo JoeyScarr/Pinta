@@ -89,6 +89,7 @@ namespace Pinta
 			var paletteBox = new CategoryBox ("Palette");
 			var palette = new ColorPaletteWidget (false);
 			palette.Initialize ();
+			DarkenBackground (palette);
 			PintaCore.Actions.Edit.CreatePaletteCommandMapBox (paletteBox.Body, palette);
 			paletteRow.Add (paletteBox);
 
@@ -145,16 +146,21 @@ namespace Pinta
 				frame.Add (vbox);
 				Add (frame);
 
-				const byte color_change = 15;
-
-				var bg = Style.Background (StateType.Normal);
-				byte newRed = (byte)((byte)bg.Red + color_change);
-				byte newGreen = (byte)((byte)bg.Green + color_change);
-				byte newBlue = (byte)((byte)bg.Blue + color_change);
-				var newBg = new Color (newRed, newGreen, newBlue);
-				Colormap.System.AllocColor (ref newBg, true, true);
-				ModifyBg (StateType.Normal, newBg);
+				DarkenBackground (this);
 			}
+		}
+
+		private static void DarkenBackground (Widget widget)
+		{
+			const byte color_change = 10;
+
+			var bg = widget.Style.Background (StateType.Normal);
+			byte newRed = (byte)((byte)bg.Red + color_change);
+			byte newGreen = (byte)((byte)bg.Green + color_change);
+			byte newBlue = (byte)((byte)bg.Blue + color_change);
+			var newBg = new Color (newRed, newGreen, newBlue);
+			Colormap.System.AllocColor (ref newBg, true, true);
+			widget.ModifyBg (StateType.Normal, newBg);
 		}
 
 		private void HandleToolAdded (object sender, ToolEventArgs e)
