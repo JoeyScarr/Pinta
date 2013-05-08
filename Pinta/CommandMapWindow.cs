@@ -73,12 +73,12 @@ namespace Pinta
 			// Add rows for tools and box for tool toolbar.
 			var tools = new CategoryBox ("Tools");
 			var toolsBox = new VBox ();
-			ToolToolbarBox = new HBox ();
-			toolsBox.Add (ToolToolbarBox);
 			tools1 = new HBox ();
 			toolsBox.Add (tools1);
 			tools2 = new HBox ();
 			toolsBox.Add (tools2);
+			ToolToolbarBox = new HBox ();
+			toolsBox.Add (ToolToolbarBox);
 			tools.Body.Add (toolsBox);
 			vbox.Add (tools);
 
