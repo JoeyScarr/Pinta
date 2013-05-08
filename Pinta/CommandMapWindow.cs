@@ -16,20 +16,22 @@ namespace Pinta
 
 		public CommandMapWindow () : base (Gtk.WindowType.Popup)
 		{
+			const int spacing = 5;
+
 			TransientFor = PintaCore.Chrome.MainWindow;
 			WindowPosition = WindowPosition.CenterOnParent;
 			Opacity = 0.9;
 
 			var frame = new Frame ();
 			VBox vbox = new VBox ();
-			vbox.BorderWidth = 5;
-			vbox.Spacing = 5;
+			vbox.BorderWidth = spacing;
+			vbox.Spacing = spacing;
 			frame.Add (vbox);
 			Add (frame);
 
 			// Add the main toolbars.
 			HBox main1 = new HBox ();
-			main1.Spacing = 5;
+			main1.Spacing = spacing;
 			var file = new CategoryBox ("File");
 			var edit = new CategoryBox ("Edit");
 			PintaCore.Actions.File.CreateFileCommandMapBox (file.Body);
@@ -39,7 +41,7 @@ namespace Pinta
 			vbox.Add (main1);
 
 			HBox main2 = new HBox ();
-			main2.Spacing = 5;
+			main2.Spacing = spacing;
 			var select = new CategoryBox ("Select");
 			var crop = new CategoryBox ("Crop");
 			PintaCore.Actions.Edit.CreateSelectionCommandMapBox (select.Body);
@@ -49,7 +51,7 @@ namespace Pinta
 			vbox.Add (main2);
 
 			HBox main3 = new HBox ();
-			main3.Spacing = 5;
+			main3.Spacing = spacing;
 			var zoom = new CategoryBox ("Zoom");
 			var transform = new CategoryBox ("Transform");
 			PintaCore.Actions.View.CreateZoomCommandMapBox (zoom.Body);
@@ -59,7 +61,7 @@ namespace Pinta
 			vbox.Add (main3);
 
 			HBox main4 = new HBox ();
-			main4.Spacing = 5;
+			main4.Spacing = spacing;
 			var layers = new CategoryBox ("Layers");
 			var layer_transform = new CategoryBox ("Layer Transform");
 			PintaCore.Actions.Layers.CreateLayerCommandMapBox (layers.Body);
@@ -82,7 +84,7 @@ namespace Pinta
 
 			// Add color palette.
 			var paletteRow = new HBox ();
-			paletteRow.Spacing = 5;
+			paletteRow.Spacing = spacing;
 
 			var paletteBox = new CategoryBox ("Palette");
 			var palette = new ColorPaletteWidget (false);
@@ -111,7 +113,7 @@ namespace Pinta
 
 			// Add quit and help frames.
 			HBox main5 = new HBox ();
-			main5.Spacing = 5;
+			main5.Spacing = spacing;
 			var quit = new CategoryBox ("Quit");
 			var help = new CategoryBox ("Help");
 			PintaCore.Actions.File.CreateQuitCommandMapBox (quit.Body);
