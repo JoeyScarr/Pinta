@@ -151,11 +151,11 @@ namespace Pinta
 			}
 		}
 
-		private static Color BlendColors (Color bg, Color fg, double opacity)
+		private static Color BlendColors (Color fg, Color bg, double opacity)
 		{
-			var newRed = (byte)bg.Red * opacity + (byte)fg.Red * (1 - opacity);
-			var newGreen = (byte)bg.Green * opacity + (byte)fg.Green * (1 - opacity);
-			var newBlue = (byte)bg.Blue * opacity + (byte)fg.Blue * (1 - opacity);
+			var newRed   = (byte)fg.Red   * opacity + (byte)bg.Red   * (1 - opacity);
+			var newGreen = (byte)fg.Green * opacity + (byte)bg.Green * (1 - opacity);
+			var newBlue  = (byte)fg.Blue  * opacity + (byte)bg.Blue  * (1 - opacity);
 			var newColor = new Color ((byte)newRed, (byte)newGreen, (byte)newBlue);
 			Colormap.System.AllocColor (ref newColor, true, true);
 			return newColor;
@@ -198,7 +198,7 @@ namespace Pinta
 
 						var color = BlendColors (fg, bg, 0.5);
 
-						cr.FillRectangle (evnt.Area.ToCairoRectangle (), color.ToCairoColor ());
+						cr.FillRoundedRectangle (evnt.Area.ToCairoRectangle (), 5, color.ToCairoColor ());
 					}
 				}
 
@@ -274,9 +274,9 @@ namespace Pinta
 			const byte color_change = 10;
 
 			var bg = widget.Style.Background (StateType.Normal);
-			byte newRed = (byte)((byte)bg.Red + color_change);
+			byte newRed   = (byte)((byte)bg.Red   + color_change);
 			byte newGreen = (byte)((byte)bg.Green + color_change);
-			byte newBlue = (byte)((byte)bg.Blue + color_change);
+			byte newBlue  = (byte)((byte)bg.Blue  + color_change);
 			var newBg = new Color (newRed, newGreen, newBlue);
 			Colormap.System.AllocColor (ref newBg, true, true);
 			widget.ModifyBg (StateType.Normal, newBg);
