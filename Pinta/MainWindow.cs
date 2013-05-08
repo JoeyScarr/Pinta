@@ -57,9 +57,6 @@ namespace Pinta
 			// Move the tool toolbar into the command map window.
 			PintaCore.Chrome.ToolToolBar.Reparent (cmd_map.ToolToolbarBox);
 
-			// Hide the main menu.
-			PintaCore.Chrome.MainMenu.HideAll ();
-
 			// Initialize interface things
 			window_shell.AddAccelGroup (PintaCore.Actions.AccelGroup);
 			dialog_handlers = new ActionHandlers ();

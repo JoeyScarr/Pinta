@@ -66,10 +66,23 @@ namespace Pinta
 			main_menu = new MenuBar ();
 			main_menu.Name = name;
 
+			main_menu.SizeRequested += main_menu_SizeRequested;
+
 			menu_layout.PackStart (main_menu, false, false, 0);
 			main_menu.Show ();
 
 			return main_menu;
+		}
+
+		// This is an awful hack to make the menu invisible without actually
+		// "hiding" it according to Gtk because when you hide the main menu,
+		// it disables all the keybindings.
+		void main_menu_SizeRequested (object o, SizeRequestedArgs args)
+		{
+			var r = args.Requisition;
+			r.Width = 0;
+			r.Height = 0;
+			args.Requisition = r;
 		}
 
 		public Toolbar CreateToolBar (string name)
