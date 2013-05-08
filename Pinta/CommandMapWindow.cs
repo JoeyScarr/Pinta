@@ -98,23 +98,27 @@ namespace Pinta
 			vbox.Add (paletteRow);
 
 			// Add adjustments.
-			var adjustmentsFrame = new Frame ("Adjustments");
+			var adjustments = new CategoryBox ("Adjustments");
 			AdjustmentsCommandMapBox = new HBox ();
-			adjustmentsFrame.Add (AdjustmentsCommandMapBox);
-			vbox.Add (adjustmentsFrame);
+			adjustments.Body.Add (AdjustmentsCommandMapBox);
+			vbox.Add (adjustments);
 
 			// Add effects.
-			var effectsFrame = new Frame ("Effects");
+			var effects = new CategoryBox ("Effects");
 			EffectsCommandMapBox = new VBox ();
-			effectsFrame.Add (EffectsCommandMapBox);
-			vbox.Add (effectsFrame);
+			effects.Body.Add (EffectsCommandMapBox);
+			vbox.Add (effects);
 
 			// Add quit and help frames.
-			//HBox main5 = new HBox ();
-			//main5.Spacing = 5;
-			//PintaCore.Actions.File.CreateQuitCommandMapBox (main5, CreateFrame ("Quit"));
-			//PintaCore.Actions.Help.CreateHelpCommandMapBox (main5, CreateFrame ("Help"));
-			//vbox.Add (main5);
+			HBox main5 = new HBox ();
+			main5.Spacing = 5;
+			var quit = new CategoryBox ("Quit");
+			var help = new CategoryBox ("Help");
+			PintaCore.Actions.File.CreateQuitCommandMapBox (quit.Body);
+			PintaCore.Actions.Help.CreateHelpCommandMapBox (help.Body);
+			main5.Add (quit);
+			main5.Add (help);
+			vbox.Add (main5);
 
 			PintaCore.Tools.ToolAdded += HandleToolAdded;
 			PintaCore.Tools.ToolRemoved += HandleToolRemoved;
