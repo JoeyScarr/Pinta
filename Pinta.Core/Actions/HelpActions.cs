@@ -63,12 +63,12 @@ namespace Pinta.Core
 			menu.Append (About.CreateMenuItem ());
 		}
 
-		public void CreateHelpCommandMapBox (Box box)
+
+		public Gtk.Action[] GetHelpActions ()
 		{
-			box.Add (Website.CreateButton ());
-			box.Add (Bugs.CreateButton ());
-			box.Add (Translate.CreateButton ());
-			box.Add (About.CreateButton ());
+			return new Gtk.Action[] {
+				Website, Bugs, Translate, About
+			};
 		}
 		
 		public void RegisterHandlers ()

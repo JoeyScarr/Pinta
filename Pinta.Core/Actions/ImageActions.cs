@@ -89,21 +89,18 @@ namespace Pinta.Core
 			menu.Append (Flatten.CreateAcceleratedMenuItem (Gdk.Key.F, Gdk.ModifierType.ControlMask | Gdk.ModifierType.ShiftMask));
 		}
 
-		public void CreateCropCommandMapBox (Box box)
+		public Gtk.Action[] GetCropActions ()
 		{
-			box.Add (CropToSelection.CreateButton ());
-			box.Add (AutoCrop.CreateButton ());
-			box.Add (Resize.CreateButton ());
-			box.Add (CanvasSize.CreateButton ());
+			return new Gtk.Action[] {
+				CropToSelection, AutoCrop, Resize, CanvasSize
+			};
 		}
 
-		public void CreateTransformCommandMapBox (Box box)
+		public Gtk.Action[] GetTransformActions ()
 		{
-			box.Add (FlipHorizontal.CreateButton ());
-			box.Add (FlipVertical.CreateButton ());
-			box.Add (RotateCW.CreateButton ());
-			box.Add (RotateCCW.CreateButton ());
-			box.Add (Rotate180.CreateButton ());
+			return new Gtk.Action[] {
+				FlipHorizontal, FlipVertical, RotateCW, RotateCCW, Rotate180
+			};
 		}
 
 		public void RegisterHandlers ()

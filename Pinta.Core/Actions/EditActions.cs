@@ -130,34 +130,25 @@ namespace Pinta.Core
 			palette_menu.Append (ResizePalette.CreateMenuItem ());
 		}
 
-		public void CreateEditCommandMapBox (Box box)
+		public Gtk.Action[] GetEditActions ()
 		{
-			box.Add (Undo.CreateButton ());
-			box.Add (Redo.CreateButton ());
-			box.Add (Cut.CreateButton ());
-			box.Add (Copy.CreateButton ());
-			box.Add (CopyMerged.CreateButton ());
-			box.Add (Paste.CreateButton ());
-			box.Add (PasteIntoNewLayer.CreateButton ());
-			box.Add (PasteIntoNewImage.CreateButton ());
+			return new Gtk.Action[] {
+				Undo, Redo, Cut, Copy, CopyMerged, Paste, PasteIntoNewLayer, PasteIntoNewImage
+			};
 		}
 
-		public void CreateSelectionCommandMapBox (Box box)
+		public Gtk.Action[] GetSelectActions ()
 		{
-			box.Add (SelectAll.CreateButton ());
-			box.Add (Deselect.CreateButton ());
-			box.Add (EraseSelection.CreateButton ());
-			box.Add (FillSelection.CreateButton ());
-			box.Add (InvertSelection.CreateButton ());
+			return new Gtk.Action[] {
+				SelectAll, Deselect, EraseSelection, FillSelection, InvertSelection
+			};
 		}
-		
-		public void CreatePaletteCommandMapBox (Box box, Widget palette)
+
+		public Gtk.Action[] GetPaletteActions ()
 		{
-			box.Add (palette);
-			box.Add (LoadPalette.CreateButton ());
-			box.Add (SavePalette.CreateButton ());
-			box.Add (ResetPalette.CreateButton ());
-			box.Add (ResizePalette.CreateButton ());
+			return new Gtk.Action[] {
+				LoadPalette, SavePalette, ResetPalette, ResizePalette
+			};
 		}
 
 		public void CreateHistoryWindowToolBar (Gtk.Toolbar toolbar)

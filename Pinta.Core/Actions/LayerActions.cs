@@ -93,22 +93,18 @@ namespace Pinta.Core
 			menu.Append (Properties.CreateAcceleratedMenuItem (Gdk.Key.F4, Gdk.ModifierType.None));
 		}
 
-		public void CreateLayerCommandMapBox (Box box)
+		public Gtk.Action[] GetLayerActions ()
 		{
-			box.Add (AddNewLayer.CreateButton ());
-			box.Add (DeleteLayer.CreateButton ());
-			box.Add (DuplicateLayer.CreateButton ());
-			box.Add (MergeLayerDown.CreateButton ());
-			box.Add (ImportFromFile.CreateButton ());
-			box.Add (Properties.CreateButton ());
+			return new Gtk.Action[] {
+				AddNewLayer, DeleteLayer, DuplicateLayer, MergeLayerDown, ImportFromFile, Properties
+			};
 		}
 
-		public void CreateLayerTransformCommandMapBox (Box box)
+		public Gtk.Action[] GetLayerTransformActions ()
 		{
-			box.Add (FlipHorizontal.CreateButton ());
-			box.Add (FlipVertical.CreateButton ());
-			box.Add (RotateZoom.CreateButton ());
-			box.Add (PintaCore.Actions.Image.Flatten.CreateButton ());
+			return new Gtk.Action[] {
+				FlipHorizontal, FlipVertical, RotateZoom, PintaCore.Actions.Image.Flatten
+			};
 		}
 
 		public void CreateLayerWindowToolBar (Gtk.Toolbar toolbar)

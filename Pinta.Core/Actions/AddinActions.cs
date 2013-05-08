@@ -66,9 +66,9 @@ namespace Pinta.Core
 			menu.AppendSeparator ();
 		}
 
-		public void CreateAddinsCommandMapBox (Box box)
+		public Gtk.Action[] GetAddinActions ()
 		{
-			box.Add (AddinManager.CreateButton ());
+			return new Gtk.Action[] { AddinManager };
 		}
 		#endregion
 	}

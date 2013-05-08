@@ -25,7 +25,6 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Gdk;
 using Gtk;
@@ -93,22 +92,18 @@ namespace Pinta.Core
 			menu.Append (Exit.CreateAcceleratedMenuItem (Gdk.Key.Q, Gdk.ModifierType.ControlMask));
 		}
 
-		public void CreateFileCommandMapBox (Box box)
+		public Gtk.Action[] GetFileActions ()
 		{
-			box.Add (New.CreateButton ());
-			box.Add (NewScreenshot.CreateButton ());
-			box.Add (Open.CreateButton ());
-			box.Add (Save.CreateButton ());
-			box.Add (SaveAs.CreateButton ());
-			box.Add (PintaCore.Actions.Window.SaveAll.CreateButton ());
-			box.Add (Print.CreateButton ());
+			return new Gtk.Action[] {
+				New, NewScreenshot, Open, Save, SaveAs, PintaCore.Actions.Window.SaveAll, Print
+			};
 		}
 
-		public void CreateQuitCommandMapBox (Box box)
+		public Gtk.Action[] GetQuitActions ()
 		{
-			box.Add (Close.CreateButton ());
-			box.Add (PintaCore.Actions.Window.CloseAll.CreateButton ());
-			box.Add (Exit.CreateButton ());
+			return new Gtk.Action[] {
+				Close, PintaCore.Actions.Window.CloseAll, Exit
+			};
 		}
 		
 		public void RegisterHandlers ()

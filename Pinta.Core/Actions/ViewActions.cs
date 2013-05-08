@@ -133,13 +133,11 @@ namespace Pinta.Core
 			menu.Append (show_pad);
 		}
 
-		public void CreateZoomCommandMapBox (Box box)
+		public Gtk.Action[] GetZoomActions ()
 		{
-			box.Add (ZoomIn.CreateButton ());
-			box.Add (ZoomOut.CreateButton ());
-			box.Add (ActualSize.CreateButton ());
-			box.Add (ZoomToWindow.CreateButton ());
-			box.Add (Fullscreen.CreateButton ());
+			return new Gtk.Action[] {
+				ZoomIn, ZoomOut, ActualSize, ZoomToWindow, Fullscreen
+			};
 		}
 
 		public void CreateToolBar (Gtk.Toolbar toolbar)

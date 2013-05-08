@@ -35,21 +35,6 @@ namespace Pinta.Core
 		public const int MouseMiddleButton = 2;
 		public const int MouseRightButton = 3;
 
-		public static Gtk.Button CreateButton (this Gtk.Action action)
-		{
-			var button = new Button ();
-			action.ConnectProxy (button);
-
-			button.Relief = ReliefStyle.None;
-			button.TooltipText = action.Label;
-			button.Label = action.Label;
-			button.Image = new Image (action.StockId, IconSize.Button);
-			button.ImagePosition = PositionType.Top;
-			button.Image.Show ();
-
-			return button;
-		}
-
 		public static void AddWidgetItem (this Toolbar tb, Widget w)
 		{
 			w.Show ();
