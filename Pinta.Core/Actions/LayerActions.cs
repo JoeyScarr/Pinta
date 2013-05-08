@@ -93,9 +93,8 @@ namespace Pinta.Core
 			menu.Append (Properties.CreateAcceleratedMenuItem (Gdk.Key.F4, Gdk.ModifierType.None));
 		}
 
-		public void CreateLayerCommandMapBox (Gtk.HBox mainBox)
+		public void CreateLayerCommandMapBox (Gtk.HBox mainBox, Frame frame)
 		{
-			var frame = new Frame ("Layers");
 			var box = new HBox ();
 
 			box.Add (AddNewLayer.CreateButton ());
@@ -109,9 +108,8 @@ namespace Pinta.Core
 			mainBox.Add (frame);
 		}
 
-		public void CreateLayerTransformCommandMapBox (Gtk.HBox mainBox)
+		public void CreateLayerTransformCommandMapBox (Gtk.HBox mainBox, Frame frame)
 		{
-			var frame = new Frame ("Layer Transform");
 			var box = new HBox ();
 
 			box.Add (FlipHorizontal.CreateButton ());

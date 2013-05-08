@@ -130,9 +130,8 @@ namespace Pinta.Core
 			palette_menu.Append (ResizePalette.CreateMenuItem ());
 		}
 
-		public void CreateEditCommandMapBox (Gtk.HBox mainBox)
+		public void CreateEditCommandMapBox (Gtk.HBox mainBox, Frame frame)
 		{
-			var frame = new Frame ("Edit");
 			var box = new HBox ();
 
 			box.Add (Undo.CreateButton ());
@@ -148,9 +147,8 @@ namespace Pinta.Core
 			mainBox.Add (frame);
 		}
 
-		public void CreateSelectionCommandMapBox (Gtk.HBox mainBox)
+		public void CreateSelectionCommandMapBox (Gtk.HBox mainBox, Frame frame)
 		{
-			var frame = new Frame ("Select");
 			var box = new HBox ();
 
 			box.Add (SelectAll.CreateButton ());
@@ -163,9 +161,8 @@ namespace Pinta.Core
 			mainBox.Add (frame);
 		}
 		
-		public void CreatePaletteCommandMapBox (Gtk.HBox mainBox, Widget palette)
+		public void CreatePaletteCommandMapBox (Gtk.HBox mainBox, Frame frame, Widget palette)
 		{
-			var frame = new Frame ("Palette");
 			var box = new HBox ();
 
 			box.Add (palette);

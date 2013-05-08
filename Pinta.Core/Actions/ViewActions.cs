@@ -133,9 +133,8 @@ namespace Pinta.Core
 			menu.Append (show_pad);
 		}
 
-		public void CreateZoomCommandMapBox (Gtk.HBox mainBox)
+		public void CreateZoomCommandMapBox (Gtk.HBox mainBox, Frame frame)
 		{
-			var frame = new Frame ("Zoom");
 			var box = new HBox ();
 
 			box.Add (ZoomIn.CreateButton ());

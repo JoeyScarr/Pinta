@@ -63,9 +63,8 @@ namespace Pinta.Core
 			menu.Append (About.CreateMenuItem ());
 		}
 
-		public void CreateHelpCommandMapBox (Gtk.HBox mainBox)
+		public void CreateHelpCommandMapBox (Gtk.HBox mainBox, Frame frame)
 		{
-			var frame = new Frame ("Help");
 			var box = new HBox ();
 
 			box.Add (Website.CreateButton ());

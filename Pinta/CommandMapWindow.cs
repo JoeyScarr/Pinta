@@ -28,30 +28,30 @@ namespace Pinta
 			// Add the main toolbars.
 			HBox main1 = new HBox ();
 			main1.Spacing = 5;
-			PintaCore.Actions.File.CreateFileCommandMapBox (main1);
-			PintaCore.Actions.Edit.CreateEditCommandMapBox (main1);
+			PintaCore.Actions.File.CreateFileCommandMapBox (main1, CreateFrame ("File"));
+			PintaCore.Actions.Edit.CreateEditCommandMapBox (main1, CreateFrame ("Edit"));
 			vbox.Add (main1);
 
 			HBox main2 = new HBox ();
 			main2.Spacing = 5;
-			PintaCore.Actions.Edit.CreateSelectionCommandMapBox (main2);
-			PintaCore.Actions.Image.CreateCropCommandMapBox (main2);
+			PintaCore.Actions.Edit.CreateSelectionCommandMapBox (main2, CreateFrame ("Select"));
+			PintaCore.Actions.Image.CreateCropCommandMapBox (main2, CreateFrame ("Crop"));
 			vbox.Add (main2);
 
 			HBox main3 = new HBox ();
 			main3.Spacing = 5;
-			PintaCore.Actions.View.CreateZoomCommandMapBox (main3);
-			PintaCore.Actions.Image.CreateTransformCommandMapBox (main3);
+			PintaCore.Actions.View.CreateZoomCommandMapBox (main3, CreateFrame ("Zoom"));
+			PintaCore.Actions.Image.CreateTransformCommandMapBox (main3, CreateFrame ("Image Transform"));
 			vbox.Add (main3);
 
 			HBox main4 = new HBox ();
 			main4.Spacing = 5;
-			PintaCore.Actions.Layers.CreateLayerCommandMapBox (main4);
-			PintaCore.Actions.Layers.CreateLayerTransformCommandMapBox (main4);
+			PintaCore.Actions.Layers.CreateLayerCommandMapBox (main4, CreateFrame ("Layers"));
+			PintaCore.Actions.Layers.CreateLayerTransformCommandMapBox (main4, CreateFrame ("Layer Transform"));
 			vbox.Add (main4);
 
 			// Add rows for tools and box for tool toolbar.
-			var toolsFrame = new Frame ("Tools");
+			var toolsFrame = CreateFrame ("Tools");
 			var toolsBox = new VBox ();
 			ToolToolbarBox = new HBox ();
 			toolsBox.Add (ToolToolbarBox);
@@ -67,20 +67,20 @@ namespace Pinta
 			paletteBox.Spacing = 5;
 			var palette = new ColorPaletteWidget (false);
 			palette.Initialize ();
-			PintaCore.Actions.Edit.CreatePaletteCommandMapBox (paletteBox, palette);
+			PintaCore.Actions.Edit.CreatePaletteCommandMapBox (paletteBox, CreateFrame ("Palette"), palette);
 			vbox.Add (paletteBox);
 
 			// Add add-ins manager on same line as palette.
-			PintaCore.Actions.Addins.CreateAddinsCommandMapBox (paletteBox);
+			PintaCore.Actions.Addins.CreateAddinsCommandMapBox (paletteBox, CreateFrame ("Add-ins"));
 
 			// Add adjustments.
-			var adjustmentsFrame = new Frame ("Adjustments");
+			var adjustmentsFrame = CreateFrame ("Adjustments");
 			AdjustmentsCommandMapBox = new HBox ();
 			adjustmentsFrame.Add (AdjustmentsCommandMapBox);
 			vbox.Add (adjustmentsFrame);
 
 			// Add effects.
-			var effectsFrame = new Frame ("Effects");
+			var effectsFrame = CreateFrame ("Effects");
 			EffectsCommandMapBox = new VBox ();
 			effectsFrame.Add (EffectsCommandMapBox);
 			vbox.Add (effectsFrame);
@@ -88,12 +88,19 @@ namespace Pinta
 			// Add quit and help frames.
 			HBox main5 = new HBox ();
 			main5.Spacing = 5;
-			PintaCore.Actions.File.CreateQuitCommandMapBox (main5);
-			PintaCore.Actions.Help.CreateHelpCommandMapBox (main5);
+			PintaCore.Actions.File.CreateQuitCommandMapBox (main5, CreateFrame ("Quit"));
+			PintaCore.Actions.Help.CreateHelpCommandMapBox (main5, CreateFrame ("Help"));
 			vbox.Add (main5);
 
 			PintaCore.Tools.ToolAdded += HandleToolAdded;
 			PintaCore.Tools.ToolRemoved += HandleToolRemoved;
+		}
+
+		private static Frame CreateFrame (string label)
+		{
+			var frame = new Frame (label);
+			frame.LabelWidget.ModifyFont (new Pango.FontDescription () { Size = 24, Weight = Pango.Weight.Bold });
+			return frame;
 		}
 
 		private void HandleToolAdded (object sender, ToolEventArgs e)

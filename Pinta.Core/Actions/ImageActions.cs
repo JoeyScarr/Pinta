@@ -89,9 +89,8 @@ namespace Pinta.Core
 			menu.Append (Flatten.CreateAcceleratedMenuItem (Gdk.Key.F, Gdk.ModifierType.ControlMask | Gdk.ModifierType.ShiftMask));
 		}
 
-		public void CreateCropCommandMapBox (Gtk.HBox mainBox)
+		public void CreateCropCommandMapBox (Gtk.HBox mainBox, Frame frame)
 		{
-			var frame = new Frame ("Crop");
 			var box = new HBox ();
 
 			box.Add (CropToSelection.CreateButton ());
@@ -103,9 +102,8 @@ namespace Pinta.Core
 			mainBox.Add (frame);
 		}
 
-		public void CreateTransformCommandMapBox (Gtk.HBox mainBox)
+		public void CreateTransformCommandMapBox (Gtk.HBox mainBox, Frame frame)
 		{
-			var frame = new Frame ("Transform");
 			var box = new HBox ();
 
 			box.Add (FlipHorizontal.CreateButton ());
