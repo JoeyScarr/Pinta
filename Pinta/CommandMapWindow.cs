@@ -151,6 +151,16 @@ namespace Pinta
 			}
 		}
 
+		private static Color BlendColors (Color bg, Color fg, double opacity)
+		{
+			var newRed = (byte)bg.Red * opacity + (byte)fg.Red * (1 - opacity);
+			var newGreen = (byte)bg.Green * opacity + (byte)fg.Green * (1 - opacity);
+			var newBlue = (byte)bg.Blue * opacity + (byte)fg.Blue * (1 - opacity);
+			var newColor = new Color ((byte)newRed, (byte)newGreen, (byte)newBlue);
+			Colormap.System.AllocColor (ref newColor, true, true);
+			return newColor;
+		}
+
 		private class CommandMapButton : Button
 		{
 			private static CommandMapButton most_recently_used;
@@ -180,9 +190,14 @@ namespace Pinta
 				{
 					using (var cr = Gdk.CairoHelper.Create (evnt.Window))
 					{
-						var color = new Color ();
-						Color.Parse ("yellow", ref color);
-						Colormap.AllocColor (ref color, true, true);
+						var bg = Style.Background (StateType.Normal);
+
+						var fg = new Color ();
+						Color.Parse ("yellow", ref fg);
+						Colormap.AllocColor (ref fg, true, true);
+
+						var color = BlendColors (fg, bg, 0.5);
+
 						cr.FillRectangle (evnt.Area.ToCairoRectangle (), color.ToCairoColor ());
 					}
 				}
