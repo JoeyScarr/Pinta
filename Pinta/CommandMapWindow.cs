@@ -130,6 +130,7 @@ namespace Pinta
 
 			public CategoryBox (string labelText) : base ()
 			{
+				var frame = new Frame ();
 				var vbox = new VBox ();
 
 				var label = new Label (labelText);
@@ -139,16 +140,17 @@ namespace Pinta
 
 				vbox.Add (label);
 				vbox.Add (Body);
-				Add (vbox);
+				frame.Add (vbox);
+				Add (frame);
 
-				const byte color_change = 10;
+				const byte color_change = 15;
 
 				var bg = Style.Background (StateType.Normal);
 				byte newRed = (byte)((byte)bg.Red + color_change);
 				byte newGreen = (byte)((byte)bg.Green + color_change);
 				byte newBlue = (byte)((byte)bg.Blue + color_change);
 				var newBg = new Color (newRed, newGreen, newBlue);
-				Gdk.Colormap.System.AllocColor (ref newBg, true, true);
+				Colormap.System.AllocColor (ref newBg, true, true);
 				ModifyBg (StateType.Normal, newBg);
 			}
 		}
