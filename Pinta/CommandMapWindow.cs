@@ -153,8 +153,13 @@ namespace Pinta
 
 		private class CommandMapButton : Button
 		{
+			private static CommandMapButton most_recently_used;
+
+			public bool Highlighted { get; set; }
+
 			public CommandMapButton ()
 			{
+				Highlighted = false;
 				Relief = ReliefStyle.None;
 			}
 
@@ -167,6 +172,37 @@ namespace Pinta
 				Image = new Gtk.Image (action.StockId, IconSize.Button);
 				ImagePosition = PositionType.Top;
 				Image.Show ();
+			}
+
+			protected override bool OnExposeEvent (EventExpose evnt)
+			{
+				if (Highlighted)
+				{
+					using (var cr = Gdk.CairoHelper.Create (evnt.Window))
+					{
+						var color = new Color ();
+						Color.Parse ("yellow", ref color);
+						Colormap.AllocColor (ref color, true, true);
+						cr.FillRectangle (evnt.Area.ToCairoRectangle (), color.ToCairoColor ());
+					}
+				}
+
+				return base.OnExposeEvent (evnt);
+			}
+
+			protected override void OnClicked ()
+			{
+				if (most_recently_used != null)
+				{
+					most_recently_used.Highlighted = false;
+					most_recently_used.QueueDraw ();
+				}
+
+				Highlighted = true;
+				most_recently_used = this;
+				QueueDraw ();
+
+				base.OnClicked ();
 			}
 		}
 
