@@ -93,10 +93,8 @@ namespace Pinta.Core
 			menu.Append (Exit.CreateAcceleratedMenuItem (Gdk.Key.Q, Gdk.ModifierType.ControlMask));
 		}
 
-		public void CreateFileCommandMapBox (Gtk.HBox mainBox, Frame frame)
+		public void CreateFileCommandMapBox (Box box)
 		{
-			var box = new HBox ();
-
 			box.Add (New.CreateButton ());
 			box.Add (NewScreenshot.CreateButton ());
 			box.Add (Open.CreateButton ());
@@ -104,21 +102,13 @@ namespace Pinta.Core
 			box.Add (SaveAs.CreateButton ());
 			box.Add (PintaCore.Actions.Window.SaveAll.CreateButton ());
 			box.Add (Print.CreateButton ());
-
-			frame.Add (box);
-			mainBox.Add (frame);
 		}
 
-		public void CreateQuitCommandMapBox (Gtk.HBox mainBox, Frame frame)
+		public void CreateQuitCommandMapBox (Box box)
 		{
-			var box = new HBox ();
-
 			box.Add (Close.CreateButton ());
 			box.Add (PintaCore.Actions.Window.CloseAll.CreateButton ());
 			box.Add (Exit.CreateButton ());
-
-			frame.Add (box);
-			mainBox.Add (frame);
 		}
 		
 		public void RegisterHandlers ()

@@ -1,10 +1,11 @@
 using Gtk;
+using Gdk;
 using Pinta.Core;
 using Pinta.Gui.Widgets;
 
 namespace Pinta
 {
-	public class CommandMapWindow : Window
+	public class CommandMapWindow : Gtk.Window
 	{
 		private HBox tools1;
 		private HBox tools2;
@@ -13,7 +14,7 @@ namespace Pinta
 		public HBox AdjustmentsCommandMapBox { get; private set; }
 		public VBox EffectsCommandMapBox { get; private set; }
 
-		public CommandMapWindow () : base (WindowType.Popup)
+		public CommandMapWindow () : base (Gtk.WindowType.Popup)
 		{
 			TransientFor = PintaCore.Chrome.MainWindow;
 			WindowPosition = WindowPosition.CenterOnParent;
@@ -22,36 +23,53 @@ namespace Pinta
 			var frame = new Frame ();
 			VBox vbox = new VBox ();
 			vbox.BorderWidth = 5;
+			vbox.Spacing = 5;
 			frame.Add (vbox);
 			Add (frame);
 
 			// Add the main toolbars.
 			HBox main1 = new HBox ();
 			main1.Spacing = 5;
-			PintaCore.Actions.File.CreateFileCommandMapBox (main1, CreateFrame ("File"));
-			PintaCore.Actions.Edit.CreateEditCommandMapBox (main1, CreateFrame ("Edit"));
+			var file = new CategoryBox ("File");
+			var edit = new CategoryBox ("Edit");
+			PintaCore.Actions.File.CreateFileCommandMapBox (file.Body);
+			PintaCore.Actions.Edit.CreateEditCommandMapBox (edit.Body);
+			main1.Add (file);
+			main1.Add (edit);
 			vbox.Add (main1);
 
 			HBox main2 = new HBox ();
 			main2.Spacing = 5;
-			PintaCore.Actions.Edit.CreateSelectionCommandMapBox (main2, CreateFrame ("Select"));
-			PintaCore.Actions.Image.CreateCropCommandMapBox (main2, CreateFrame ("Crop"));
+			var select = new CategoryBox ("Select");
+			var crop = new CategoryBox ("Crop");
+			PintaCore.Actions.Edit.CreateSelectionCommandMapBox (select.Body);
+			PintaCore.Actions.Image.CreateCropCommandMapBox (crop.Body);
+			main2.Add (select);
+			main2.Add (crop);
 			vbox.Add (main2);
 
 			HBox main3 = new HBox ();
 			main3.Spacing = 5;
-			PintaCore.Actions.View.CreateZoomCommandMapBox (main3, CreateFrame ("Zoom"));
-			PintaCore.Actions.Image.CreateTransformCommandMapBox (main3, CreateFrame ("Image Transform"));
+			var zoom = new CategoryBox ("Zoom");
+			var transform = new CategoryBox ("Transform");
+			PintaCore.Actions.View.CreateZoomCommandMapBox (zoom.Body);
+			PintaCore.Actions.Image.CreateTransformCommandMapBox (transform.Body);
+			main3.Add (zoom);
+			main3.Add (transform);
 			vbox.Add (main3);
 
 			HBox main4 = new HBox ();
 			main4.Spacing = 5;
-			PintaCore.Actions.Layers.CreateLayerCommandMapBox (main4, CreateFrame ("Layers"));
-			PintaCore.Actions.Layers.CreateLayerTransformCommandMapBox (main4, CreateFrame ("Layer Transform"));
+			var layers = new CategoryBox ("Layers");
+			var layer_transform = new CategoryBox ("Layer Transform");
+			PintaCore.Actions.Layers.CreateLayerCommandMapBox (layers.Body);
+			PintaCore.Actions.Layers.CreateLayerTransformCommandMapBox (layer_transform.Body);
+			main4.Add (layers);
+			main4.Add (layer_transform);
 			vbox.Add (main4);
 
 			// Add rows for tools and box for tool toolbar.
-			var toolsFrame = CreateFrame ("Tools");
+			var tools = new CategoryBox ("Tools");
 			var toolsBox = new VBox ();
 			ToolToolbarBox = new HBox ();
 			toolsBox.Add (ToolToolbarBox);
@@ -59,48 +77,76 @@ namespace Pinta
 			toolsBox.Add (tools1);
 			tools2 = new HBox ();
 			toolsBox.Add (tools2);
-			toolsFrame.Add (toolsBox);
-			vbox.Add (toolsFrame);
+			tools.Body.Add (toolsBox);
+			vbox.Add (tools);
 
 			// Add color palette.
-			var paletteBox = new HBox ();
-			paletteBox.Spacing = 5;
+			var paletteRow = new HBox ();
+			paletteRow.Spacing = 5;
+
+			var paletteBox = new CategoryBox ("Palette");
 			var palette = new ColorPaletteWidget (false);
 			palette.Initialize ();
-			PintaCore.Actions.Edit.CreatePaletteCommandMapBox (paletteBox, CreateFrame ("Palette"), palette);
-			vbox.Add (paletteBox);
+			PintaCore.Actions.Edit.CreatePaletteCommandMapBox (paletteBox.Body, palette);
+			paletteRow.Add (paletteBox);
 
 			// Add add-ins manager on same line as palette.
-			PintaCore.Actions.Addins.CreateAddinsCommandMapBox (paletteBox, CreateFrame ("Add-ins"));
+			var addins = new CategoryBox ("Add-ins");
+			PintaCore.Actions.Addins.CreateAddinsCommandMapBox (addins.Body);
+			paletteRow.Add (addins);
+
+			vbox.Add (paletteRow);
 
 			// Add adjustments.
-			var adjustmentsFrame = CreateFrame ("Adjustments");
+			var adjustmentsFrame = new Frame ("Adjustments");
 			AdjustmentsCommandMapBox = new HBox ();
 			adjustmentsFrame.Add (AdjustmentsCommandMapBox);
 			vbox.Add (adjustmentsFrame);
 
 			// Add effects.
-			var effectsFrame = CreateFrame ("Effects");
+			var effectsFrame = new Frame ("Effects");
 			EffectsCommandMapBox = new VBox ();
 			effectsFrame.Add (EffectsCommandMapBox);
 			vbox.Add (effectsFrame);
 
 			// Add quit and help frames.
-			HBox main5 = new HBox ();
-			main5.Spacing = 5;
-			PintaCore.Actions.File.CreateQuitCommandMapBox (main5, CreateFrame ("Quit"));
-			PintaCore.Actions.Help.CreateHelpCommandMapBox (main5, CreateFrame ("Help"));
-			vbox.Add (main5);
+			//HBox main5 = new HBox ();
+			//main5.Spacing = 5;
+			//PintaCore.Actions.File.CreateQuitCommandMapBox (main5, CreateFrame ("Quit"));
+			//PintaCore.Actions.Help.CreateHelpCommandMapBox (main5, CreateFrame ("Help"));
+			//vbox.Add (main5);
 
 			PintaCore.Tools.ToolAdded += HandleToolAdded;
 			PintaCore.Tools.ToolRemoved += HandleToolRemoved;
 		}
 
-		private static Frame CreateFrame (string label)
+		private class CategoryBox : EventBox
 		{
-			var frame = new Frame (label);
-			frame.LabelWidget.ModifyFont (new Pango.FontDescription () { Size = 24, Weight = Pango.Weight.Bold });
-			return frame;
+			public Box Body { get; private set; }
+
+			public CategoryBox (string labelText) : base ()
+			{
+				var vbox = new VBox ();
+
+				var label = new Label (labelText);
+				label.ModifyFont (new Pango.FontDescription () { Size = 24, Weight = Pango.Weight.Bold });
+
+				Body = new HBox ();
+
+				vbox.Add (label);
+				vbox.Add (Body);
+				Add (vbox);
+
+				const byte color_change = 10;
+
+				var bg = Style.Background (StateType.Normal);
+				byte newRed = (byte)((byte)bg.Red + color_change);
+				byte newGreen = (byte)((byte)bg.Green + color_change);
+				byte newBlue = (byte)((byte)bg.Blue + color_change);
+				var newBg = new Color (newRed, newGreen, newBlue);
+				Gdk.Colormap.System.AllocColor (ref newBg, true, true);
+				ModifyBg (StateType.Normal, newBg);
+			}
 		}
 
 		private void HandleToolAdded (object sender, ToolEventArgs e)

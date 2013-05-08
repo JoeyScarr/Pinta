@@ -66,14 +66,9 @@ namespace Pinta.Core
 			menu.AppendSeparator ();
 		}
 
-		public void CreateAddinsCommandMapBox (Gtk.HBox mainBox, Frame frame)
+		public void CreateAddinsCommandMapBox (Box box)
 		{
-			var box = new HBox ();
-
 			box.Add (AddinManager.CreateButton ());
-
-			frame.Add (box);
-			mainBox.Add (frame);
 		}
 		#endregion
 	}
