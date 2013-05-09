@@ -163,13 +163,17 @@ namespace Pinta
 
 		private class CommandMapButton : Button
 		{
-			private static CommandMapButton most_recently_used;
+			private const int max_most_recently_used = 10;
+			private static LinkedList<CommandMapButton> most_recently_used =
+				new LinkedList<CommandMapButton> ();
+			private static double[] most_recently_used_opacities =
+				new double[] { 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 };
 
-			public bool Highlighted { get; set; }
+			private double HighlightOpacity { get; set; }
 
 			public CommandMapButton ()
 			{
-				Highlighted = false;
+				HighlightOpacity = 0.0;
 				Relief = ReliefStyle.None;
 			}
 
@@ -186,7 +190,7 @@ namespace Pinta
 
 			protected override bool OnExposeEvent (EventExpose evnt)
 			{
-				if (Highlighted)
+				if (HighlightOpacity > 0.0)
 				{
 					using (var cr = Gdk.CairoHelper.Create (evnt.Window))
 					{
@@ -196,7 +200,7 @@ namespace Pinta
 						Color.Parse ("yellow", ref fg);
 						Colormap.AllocColor (ref fg, true, true);
 
-						var color = BlendColors (fg, bg, 0.5);
+						var color = BlendColors (fg, bg, HighlightOpacity);
 
 						cr.FillRoundedRectangle (evnt.Area.ToCairoRectangle (), 5, color.ToCairoColor ());
 					}
@@ -207,14 +211,28 @@ namespace Pinta
 
 			protected override void OnClicked ()
 			{
-				if (most_recently_used != null)
+				// If we haven't hit the max number of recently used buttons
+				// yet, we have to start at some offset into the opacities
+				// array.
+				int i = max_most_recently_used - most_recently_used.Count;
+
+				// If a button occurs in the list more than once, it's opacity
+				// will be set more than once but it will be overriden last by
+				// the highest opacity (it's most recenty use).
+				foreach (var button in most_recently_used)
 				{
-					most_recently_used.Highlighted = false;
-					most_recently_used.QueueDraw ();
+					button.HighlightOpacity = most_recently_used_opacities[i];
+					button.QueueDraw ();
+					i++;
 				}
 
-				Highlighted = true;
-				most_recently_used = this;
+				if (most_recently_used.Count == max_most_recently_used)
+				{
+					most_recently_used.RemoveFirst ();
+				}
+
+				most_recently_used.AddLast (this);
+				HighlightOpacity = 1.0;
 				QueueDraw ();
 
 				base.OnClicked ();
