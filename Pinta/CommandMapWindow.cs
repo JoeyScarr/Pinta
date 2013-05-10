@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using Gtk;
 using Gdk;
 using Pinta.Core;
@@ -23,6 +25,13 @@ namespace Pinta
 		public HBox ToolToolbarBox { get; private set; }
 		public HBox AdjustmentsCommandMapBox { get; private set; }
 		public VBox EffectsCommandMapBox { get; private set; }
+
+		private const string log_file = "cmd_map_log.txt";
+
+		static CommandMapWindow ()
+		{
+			Log ("New Pinta session started.");
+		}
 
 		public CommandMapWindow () : base (Gtk.WindowType.Popup)
 		{
@@ -175,6 +184,19 @@ namespace Pinta
 			PintaCore.Effects.AddAdjustmentEvent += AddAdjustment;
 		}
 
+		private static void LogButtonClick (CommandMapButton button)
+		{
+			Log ("User clicked button: " + button.Name);
+		}
+
+		private static void Log (string message)
+		{
+			using (var log = new StreamWriter (log_file, true))
+			{
+				log.WriteLine ("{0}: {1}", DateTime.Now, message);
+			}
+		}
+
 		public void On ()
 		{
 			ShowAll ();
@@ -264,6 +286,8 @@ namespace Pinta
 				new LinkedList<CommandMapButton> ();
 			private static double[] most_recently_used_opacities;
 
+			public virtual string Name { get { return Label; } }
+
 			static CommandMapButton ()
 			{
 				most_recently_used_opacities = new double[max_most_recently_used];
@@ -319,6 +343,8 @@ namespace Pinta
 			[GLib.ConnectBefore]
 			protected void HandleButtonReleaseEvent (object o, ButtonReleaseEventArgs args)
 			{
+				LogButtonClick (this);
+
 				if (max_most_recently_used == 0)
 					return;
 
@@ -351,6 +377,7 @@ namespace Pinta
 		private class CommandMapToolButton : CommandMapButton
 		{
 			public BaseTool Tool { get; private set; }
+			public override string Name { get { return Tool.Name; } }
 
 			public CommandMapToolButton (BaseTool tool) : base ()
 			{
