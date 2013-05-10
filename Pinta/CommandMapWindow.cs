@@ -29,11 +29,23 @@ namespace Pinta
 			Opacity = 0.9;
 
 			var frame = new Frame ();
+			HBox container = new HBox ();
+
 			VBox vbox = new VBox ();
 			vbox.BorderWidth = spacing;
 			vbox.Spacing = spacing;
-			frame.Add (vbox);
+
+			VBox dock_container = new VBox ();
+
+			container.Add (vbox);
+			container.Add (dock_container);
+			frame.Add (container);
 			Add (frame);
+
+			// Add the dock panels.
+			dock_container.Add (new OpenImagesListWidget ());
+			dock_container.Add (new LayersListWidget ());
+			dock_container.Add (new HistoryTreeView ());
 
 			// Add the main toolbars.
 			HBox main1 = new HBox ();
