@@ -203,8 +203,17 @@ namespace Pinta
 			private const int max_most_recently_used = 10;
 			private static LinkedList<CommandMapButton> most_recently_used =
 				new LinkedList<CommandMapButton> ();
-			private static double[] most_recently_used_opacities =
-				new double[] { 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 };
+			private static double[] most_recently_used_opacities;
+
+			static CommandMapButton ()
+			{
+				most_recently_used_opacities = new double[max_most_recently_used];
+
+				for (int i = 0; i < max_most_recently_used; i++)
+				{
+					most_recently_used_opacities[i] = (double)i / max_most_recently_used;
+				}
+			}
 
 			private double HighlightOpacity { get; set; }
 
@@ -251,6 +260,9 @@ namespace Pinta
 			[GLib.ConnectBefore]
 			protected void HandleButtonReleaseEvent (object o, ButtonReleaseEventArgs args)
 			{
+				if (max_most_recently_used == 0)
+					return;
+
 				// If we haven't hit the max number of recently used buttons
 				// yet, we have to start at some offset into the opacities
 				// array.
