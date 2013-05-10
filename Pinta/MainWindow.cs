@@ -120,6 +120,10 @@ namespace Pinta
 			{
 				cmd_map.Toggle ();
 			}
+			else
+			{
+				cmd_map.HideAll ();
+			}
 
 			// Give the Canvas (and by extension the tools)
 			// first shot at handling the event if

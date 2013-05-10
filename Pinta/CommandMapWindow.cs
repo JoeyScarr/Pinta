@@ -212,6 +212,8 @@ namespace Pinta
 			{
 				HighlightOpacity = 0.0;
 				Relief = ReliefStyle.None;
+
+				ButtonReleaseEvent += HandleButtonReleaseEvent;
 			}
 
 			public CommandMapButton (Gtk.Action action) : this ()
@@ -246,7 +248,8 @@ namespace Pinta
 				return base.OnExposeEvent (evnt);
 			}
 
-			protected override void OnClicked ()
+			[GLib.ConnectBefore]
+			protected void HandleButtonReleaseEvent (object o, ButtonReleaseEventArgs args)
 			{
 				// If we haven't hit the max number of recently used buttons
 				// yet, we have to start at some offset into the opacities
@@ -272,7 +275,10 @@ namespace Pinta
 				HighlightOpacity = 1.0;
 				QueueDraw ();
 
-				base.OnClicked ();
+				if (args.Event.IsControlPressed ())
+				{
+					Toplevel.HideAll ();
+				}
 			}
 		}
 
@@ -292,12 +298,14 @@ namespace Pinta
 				box.Add (icon);
 				box.Add (new Label (tool.Name));
 				Add (box);
+
+				ButtonReleaseEvent += Tool_HandleButtonReleaseEvent;
 			}
 
-			protected override void OnClicked ()
+			[GLib.ConnectBefore]
+			void Tool_HandleButtonReleaseEvent (object o, ButtonReleaseEventArgs args)
 			{
 				PintaCore.Tools.SetCurrentTool (Tool);
-				base.OnClicked ();
 			}
 		}
 
