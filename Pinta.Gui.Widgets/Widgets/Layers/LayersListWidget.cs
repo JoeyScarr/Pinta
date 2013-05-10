@@ -40,6 +40,11 @@ namespace Pinta.Gui.Widgets
 	{
 		private TreeView tree;
 		private TreeStore store;
+
+		private CellRenderer layer_toggle_cell;
+		private TreeViewColumn layer_name_column;
+		private TreeViewColumn layer_preview_column;
+		private TreeViewColumn layer_toggle_column;
 				
 		private const int store_index_thumbnail = 0;
 		private const int store_index_name = 1;
@@ -77,6 +82,7 @@ namespace Pinta.Gui.Widgets
 			col.Sizing = TreeViewColumnSizing.Fixed;
 			col.FixedWidth = thumbnail_column_width;
 			tree.AppendColumn (col);
+			layer_preview_column = col;
 
 			var textCell = new CellRendererText ();
 			textCell.Ellipsize = Pango.EllipsizeMode.End;
@@ -86,20 +92,24 @@ namespace Pinta.Gui.Widgets
 			col.MinWidth = name_column_min_width;
 			col.MaxWidth = name_column_max_width;
 			tree.AppendColumn (col);
+			layer_name_column = col;
 			
 			var crt = new CellRendererToggle ();
 			crt.Activatable = true;
 			crt.Toggled += LayerVisibilityToggled;
+			layer_toggle_cell = crt;
 			
 			col = new TreeViewColumn ("Visible", crt, "active", store_index_visibility);
 			col.Sizing = TreeViewColumnSizing.Fixed;
 			col.FixedWidth = visibility_column_width;
 			tree.AppendColumn (col);
+			layer_toggle_column = col;
 			
 			store = new TreeStore (typeof (Cairo.ImageSurface), typeof (string), typeof (bool), typeof (Layer));
 			
 			tree.Model = store;
 			tree.RowActivated += HandleRowActivated;
+			tree.ButtonPressEvent += HandleTreeButtonPressEvent;
 			
 			Add (tree);
 			
@@ -116,6 +126,34 @@ namespace Pinta.Gui.Widgets
 
 
 			ShowAll ();
+		}
+
+		[GLib.ConnectBefore]
+		void HandleTreeButtonPressEvent (object o, ButtonPressEventArgs args)
+		{
+			double click_x = args.Event.X;
+			double click_y = args.Event.Y;
+
+			int start_pos, width;
+			layer_toggle_column.CellGetPosition (layer_toggle_cell, out start_pos, out width);
+
+			start_pos += layer_preview_column.Width + layer_name_column.Width;
+
+			if (start_pos <= click_x && start_pos + width > click_x)
+			{
+				TreePath path;
+				tree.GetPathAtPos ((int)click_x, (int)click_y, out path);
+
+				TreeIter iter;
+				if (store.GetIter (out iter, path))
+				{
+					bool b = (bool)store.GetValue (iter, store_index_visibility);
+					store.SetValue (iter, store_index_visibility, !b);
+
+					var layer = (UserLayer)store.GetValue (iter, store_index_layer);
+					SetLayerVisibility (layer, !b);
+				}
+			}
 		}
 
 		private UserLayer GetSelectedLayerInTreeView()
