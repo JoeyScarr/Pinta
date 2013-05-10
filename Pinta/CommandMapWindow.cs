@@ -31,9 +31,10 @@ namespace Pinta
 
 			var frame = new Frame ();
 			HBox container = new HBox ();
+			container.BorderWidth = spacing;
+			container.Spacing = spacing;
 
 			VBox vbox = new VBox ();
-			vbox.BorderWidth = spacing;
 			vbox.Spacing = spacing;
 
 			var dock = new DockFrame ();
