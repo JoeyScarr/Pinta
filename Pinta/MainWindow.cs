@@ -118,7 +118,7 @@ namespace Pinta
 		{
 			if (e.Event.Key == Gdk.Key.Alt_L || e.Event.Key == Gdk.Key.Alt_R)
 			{
-				cmd_map.ShowAll ();
+				cmd_map.On ();
 			}
 
 			// Give the Canvas (and by extension the tools)
@@ -135,7 +135,7 @@ namespace Pinta
 		{
 			if (e.Event.Key == Gdk.Key.Alt_L || e.Event.Key == Gdk.Key.Alt_R)
 			{
-				cmd_map.HideAll ();
+				cmd_map.Off ();
 			}
 
 			// Give the Canvas (and by extension the tools)
@@ -149,7 +149,7 @@ namespace Pinta
 
 		void MainWindow_FocusOutEvent (object o, EventArgs e)
 		{
-			cmd_map.HideAll ();
+			cmd_map.Off ();
 		}
 
 		// Check if the mouse pointer is on the canvas

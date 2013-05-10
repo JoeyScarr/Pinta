@@ -12,10 +12,13 @@ namespace Pinta
 		private HBox tools1;
 		private HBox tools2;
 
+		private CommandMapMaskWindow mask_window;
+
 		private List<HBox> command_map_boxes;
 		private Dictionary<Gtk.Action, Button> command_map_buttons;
 		private Dictionary<Gtk.Action, HBox> command_map_button_boxes;
 		private Dictionary<BaseEffect, Button> adjustment_command_map_buttons;
+		private List<Widget> important_widgets; // The widgets which should show through the grey mask.
 
 		public HBox ToolToolbarBox { get; private set; }
 		public HBox AdjustmentsCommandMapBox { get; private set; }
@@ -28,6 +31,8 @@ namespace Pinta
 			TransientFor = PintaCore.Chrome.MainWindow;
 			WindowPosition = WindowPosition.CenterOnParent;
 			Opacity = 0.9;
+
+			mask_window = new CommandMapMaskWindow ();
 
 			var frame = new Frame ();
 			HBox container = new HBox ();
@@ -163,10 +168,75 @@ namespace Pinta
 			command_map_buttons = new Dictionary<Gtk.Action, Button> ();
 			command_map_button_boxes = new Dictionary<Gtk.Action, HBox> ();
 			adjustment_command_map_buttons = new Dictionary<BaseEffect, Button> ();
+			important_widgets = new List<Widget> ();
 
 			PintaCore.Effects.AddEffectEvent += AddEffect;
 			PintaCore.Effects.RemoveEffectEvent += RemoveEffect;
 			PintaCore.Effects.AddAdjustmentEvent += AddAdjustment;
+		}
+
+		public void On ()
+		{
+			ShowAll ();
+			mask_window.ShowAll ();
+		}
+
+		public void Off ()
+		{
+			HideAll ();
+			mask_window.HideAll ();
+		}
+
+		public void RecreateMask ()
+		{
+			int width, height;
+			GetSize (out width, out height);
+
+			mask_window.Recreate (width, height, important_widgets);
+		}
+
+		private class CommandMapMaskWindow : Gtk.Window
+		{
+			public CommandMapMaskWindow () : base (Gtk.WindowType.Popup)
+			{
+				TransientFor = PintaCore.Chrome.MainWindow;
+				WindowPosition = WindowPosition.CenterOnParent;
+				Opacity = 0.6;
+			}
+
+			public void Recreate (int width, int height, List<Widget> widgets)
+			{
+				Resize (width, height);
+
+				var image = new Cairo.ImageSurface (Cairo.Format.Argb32, width, height);
+				using (var cr = new Cairo.Context (image))
+				{
+					cr.Operator = Cairo.Operator.Source;
+
+					cr.Rectangle (0, 0, width, height);
+					cr.SetSourceRGBA (0, 0, 0, 1);
+					cr.Fill ();
+
+					foreach (var widget in widgets)
+					{
+						int w, h, x, y;
+						w = widget.Allocation.Width;
+						h = widget.Allocation.Height;
+						widget.TranslateCoordinates (widget.Toplevel, 0, 0, out x, out y);
+
+						cr.Rectangle (x, y, w, h);
+						cr.SetSourceRGBA (0, 0, 0, 0);
+						cr.Fill ();
+					}
+				}
+
+				var pixbuf = image.ToPixbuf ();
+				Pixmap pm, mask;
+				pixbuf.RenderPixmapAndMask (out pm, out mask, 1);
+				ShapeCombineMask (mask, 0, 0);
+				pm.Dispose ();
+				mask.Dispose ();
+			}
 		}
 
 		private void CreateButtons (Gtk.Action[] actions, Box box)
