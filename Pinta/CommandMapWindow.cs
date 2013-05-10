@@ -168,6 +168,18 @@ namespace Pinta
 			PintaCore.Effects.AddAdjustmentEvent += AddAdjustment;
 		}
 
+		public void Toggle ()
+		{
+			if (IsMapped)
+			{
+				HideAll ();
+			}
+			else
+			{
+				ShowAll ();
+			}
+		}
+
 		private void CreateButtons (Gtk.Action[] actions, Box box)
 		{
 			foreach (var action in actions)
