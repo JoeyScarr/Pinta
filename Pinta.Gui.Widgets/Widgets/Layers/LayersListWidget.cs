@@ -131,6 +131,9 @@ namespace Pinta.Gui.Widgets
 		[GLib.ConnectBefore]
 		void HandleTreeButtonPressEvent (object o, ButtonPressEventArgs args)
 		{
+			if (args.Event.Type != Gdk.EventType.ButtonPress)
+				return;
+
 			double click_x = args.Event.X;
 			double click_y = args.Event.Y;
 
