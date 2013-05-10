@@ -44,5 +44,6 @@ namespace MonoDevelop.Components.Docking
 		NoGrip = 1 << 5,
 		Sticky = 1 << 6,  // Visibility is the same for al layouts
 		Locked = NoGrip,
+		CantMove = 1 << 7
 	}
 }

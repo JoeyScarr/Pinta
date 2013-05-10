@@ -185,7 +185,20 @@ namespace MonoDevelop.Components.Docking
 			btnClose.Visible = (item.Behavior & DockItemBehavior.CantClose) == 0;
 			header.Visible = (item.Behavior & DockItemBehavior.Locked) == 0;
 			btnDock.Visible = (item.Behavior & DockItemBehavior.CantAutoHide) == 0;
-			
+
+			if ((item.Behavior & DockItemBehavior.CantMove) != 0) {
+				header.ButtonPressEvent -= HeaderButtonPress;
+				header.ButtonReleaseEvent -= HeaderButtonRelease;
+				header.MotionNotifyEvent -= HeaderMotion;
+				header.KeyPressEvent -= HeaderKeyPress;
+				header.KeyReleaseEvent -= HeaderKeyRelease;
+				header.EnterNotifyEvent -= HeaderEnterNotify;
+				header.LeaveNotifyEvent -= HeaderLeaveNotify;
+				header.Realized += delegate {
+					header.GdkWindow.Cursor = null;
+				};
+			}
+
 			if (item.Status == DockItemStatus.AutoHide || item.Status == DockItemStatus.Floating) {
 				btnDock.Image = new Gtk.Image (pixDock);
 				btnDock.TooltipText = Catalog.GetString ("Dock");
