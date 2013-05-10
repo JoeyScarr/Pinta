@@ -274,11 +274,6 @@ namespace Pinta
 				most_recently_used.AddLast (this);
 				HighlightOpacity = 1.0;
 				QueueDraw ();
-
-				if (args.Event.IsControlPressed ())
-				{
-					Toplevel.HideAll ();
-				}
 			}
 		}
 

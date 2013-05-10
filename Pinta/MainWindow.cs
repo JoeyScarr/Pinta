@@ -116,13 +116,9 @@ namespace Pinta
 		[GLib.ConnectBefore]
 		void MainWindow_KeyPressEvent (object o, KeyPressEventArgs e)
 		{
-			if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R)
+			if (e.Event.Key == Gdk.Key.Alt_L || e.Event.Key == Gdk.Key.Alt_R)
 			{
-				cmd_map.Toggle ();
-			}
-			else
-			{
-				cmd_map.HideAll ();
+				cmd_map.ShowAll ();
 			}
 
 			// Give the Canvas (and by extension the tools)
@@ -137,6 +133,11 @@ namespace Pinta
 		[GLib.ConnectBefore]
 		void MainWindow_KeyReleaseEvent (object o, KeyReleaseEventArgs e)
 		{
+			if (e.Event.Key == Gdk.Key.Alt_L || e.Event.Key == Gdk.Key.Alt_R)
+			{
+				cmd_map.HideAll ();
+			}
+
 			// Give the Canvas (and by extension the tools)
 			// first shot at handling the event if
 			// the mouse pointer is on the canvas
