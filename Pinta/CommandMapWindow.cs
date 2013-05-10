@@ -178,13 +178,13 @@ namespace Pinta
 		public void On ()
 		{
 			ShowAll ();
-			mask_window.ShowAll ();
+			//mask_window.ShowAll ();
 		}
 
 		public void Off ()
 		{
 			HideAll ();
-			mask_window.HideAll ();
+			//mask_window.HideAll ();
 		}
 
 		public void RecreateMask ()
