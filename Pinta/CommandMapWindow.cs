@@ -189,7 +189,7 @@ namespace Pinta
 			Log ("User clicked button: " + button.Name);
 		}
 
-		private static void Log (string message)
+		public static void Log (string message)
 		{
 			using (var log = new StreamWriter (log_file, true))
 			{
@@ -199,12 +199,20 @@ namespace Pinta
 
 		public void On ()
 		{
+			if (IsMapped)
+				return;
+
+			Log ("Command map window shown");
 			ShowAll ();
 			//mask_window.ShowAll ();
 		}
 
 		public void Off ()
 		{
+			if (!IsMapped)
+				return;
+
+			Log ("Command map window hidden");
 			HideAll ();
 			//mask_window.HideAll ();
 		}
