@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using Gtk;
 using Mono.Addins;
 using Mono.Unix;
@@ -40,7 +41,8 @@ namespace Pinta
 		ScrolledWindow sw;
 		DockFrame dock;
 		Menu show_pad;
-		CommandMapWindow cmd_map;
+        CommandMapWindow cmd_map;
+        HashSet<Gdk.Key> pressed_keys;
 
 		CanvasPad canvas_pad;
 
@@ -48,6 +50,8 @@ namespace Pinta
 		
 		public MainWindow ()
 		{
+            pressed_keys = new HashSet<Gdk.Key>();
+
 			// Build our window
 			CreateWindow ();
 
@@ -116,6 +120,12 @@ namespace Pinta
 		[GLib.ConnectBefore]
 		void MainWindow_KeyPressEvent (object o, KeyPressEventArgs e)
 		{
+            if (!pressed_keys.Contains (e.Event.Key))
+            {
+                pressed_keys.Add (e.Event.Key);
+                Logger.Log ("Key press: " + e.Event.Key.ToString ());
+            }
+
 			if (e.Event.Key == Gdk.Key.Alt_L || e.Event.Key == Gdk.Key.Alt_R)
 			{
 				cmd_map.On ();
@@ -132,7 +142,10 @@ namespace Pinta
 
 		[GLib.ConnectBefore]
 		void MainWindow_KeyReleaseEvent (object o, KeyReleaseEventArgs e)
-		{
+        {
+            pressed_keys.Remove (e.Event.Key);
+            Logger.Log ("Key release: " + e.Event.Key.ToString ());
+
 			if (e.Event.Key == Gdk.Key.Alt_L || e.Event.Key == Gdk.Key.Alt_R)
 			{
 				cmd_map.Off ();
