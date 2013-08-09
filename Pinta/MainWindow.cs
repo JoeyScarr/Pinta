@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using Gtk;
 using Mono.Addins;
 using Mono.Unix;
@@ -41,12 +42,16 @@ namespace Pinta
 		DockFrame dock;
 		Menu show_pad;
 
+        HashSet<Gdk.Key> pressed_keys;
+
 		CanvasPad canvas_pad;
 
 		ActionHandlers dialog_handlers;
 		
 		public MainWindow ()
-		{
+        {
+            pressed_keys = new HashSet<Gdk.Key>();
+
             // Initialize logging
             Logger.Initialize ();
 
@@ -110,6 +115,12 @@ namespace Pinta
 		[GLib.ConnectBefore]
 		void MainWindow_KeyPressEvent (object o, KeyPressEventArgs e)
 		{
+            if (!pressed_keys.Contains (e.Event.Key))
+            {
+                pressed_keys.Add (e.Event.Key);
+                Logger.Log ("Key press: " + e.Event.Key.ToString ());
+            }
+
 			// Give the Canvas (and by extension the tools)
 			// first shot at handling the event if
 			// the mouse pointer is on the canvas
@@ -121,7 +132,10 @@ namespace Pinta
 
 		[GLib.ConnectBefore]
 		void MainWindow_KeyReleaseEvent (object o, KeyReleaseEventArgs e)
-		{
+        {
+            pressed_keys.Remove (e.Event.Key);
+            Logger.Log ("Key release: " + e.Event.Key.ToString ());
+
 			// Give the Canvas (and by extension the tools)
 			// first shot at handling the event if
 			// the mouse pointer is on the canvas
