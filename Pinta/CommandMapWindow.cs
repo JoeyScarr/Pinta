@@ -78,8 +78,8 @@ namespace Pinta
 			main1.Spacing = spacing;
 			var file = new CategoryBox ("File");
 			var edit = new CategoryBox ("Edit");
-			CreateButtons (PintaCore.Actions.File.GetFileActions (), file.Body);
-			CreateButtons (PintaCore.Actions.Edit.GetEditActions (), edit.Body);
+			CreateButtons ("File", PintaCore.Actions.File.GetFileActions (), file.Body);
+			CreateButtons ("Edit", PintaCore.Actions.Edit.GetEditActions (), edit.Body);
 			main1.Add (file);
 			main1.Add (edit);
 			vbox.Add (main1);
@@ -88,8 +88,8 @@ namespace Pinta
 			main2.Spacing = spacing;
 			var select = new CategoryBox ("Select");
 			var crop = new CategoryBox ("Crop");
-			CreateButtons (PintaCore.Actions.Edit.GetSelectActions (), select.Body);
-			CreateButtons (PintaCore.Actions.Image.GetCropActions (), crop.Body);
+			CreateButtons ("Select", PintaCore.Actions.Edit.GetSelectActions (), select.Body);
+			CreateButtons ("Crop", PintaCore.Actions.Image.GetCropActions (), crop.Body);
 			main2.Add (select);
 			main2.Add (crop);
 			vbox.Add (main2);
@@ -98,8 +98,8 @@ namespace Pinta
 			main3.Spacing = spacing;
 			var zoom = new CategoryBox ("Zoom");
 			var transform = new CategoryBox ("Transform");
-			CreateButtons (PintaCore.Actions.View.GetZoomActions (), zoom.Body);
-			CreateButtons (PintaCore.Actions.Image.GetTransformActions (), transform.Body);
+			CreateButtons ("Zoom", PintaCore.Actions.View.GetZoomActions (), zoom.Body);
+			CreateButtons ("Transform", PintaCore.Actions.Image.GetTransformActions (), transform.Body);
 			main3.Add (zoom);
 			main3.Add (transform);
 			vbox.Add (main3);
@@ -108,8 +108,8 @@ namespace Pinta
 			main4.Spacing = spacing;
 			var layers = new CategoryBox ("Layers");
 			var layer_transform = new CategoryBox ("Layer Transform");
-			CreateButtons (PintaCore.Actions.Layers.GetLayerActions (), layers.Body);
-			CreateButtons (PintaCore.Actions.Layers.GetLayerTransformActions (), layer_transform.Body);
+			CreateButtons ("Layers", PintaCore.Actions.Layers.GetLayerActions (), layers.Body);
+			CreateButtons ("Layer Transform", PintaCore.Actions.Layers.GetLayerTransformActions (), layer_transform.Body);
 			main4.Add (layers);
 			main4.Add (layer_transform);
 			vbox.Add (main4);
@@ -135,12 +135,12 @@ namespace Pinta
 			palette.Initialize ();
 			DarkenBackground (palette);
 			paletteBox.Body.Add (palette);
-			CreateButtons (PintaCore.Actions.Edit.GetPaletteActions (), paletteBox.Body);
+			CreateButtons ("Palette", PintaCore.Actions.Edit.GetPaletteActions (), paletteBox.Body);
 			paletteRow.Add (paletteBox);
 
 			// Add add-ins manager on same line as palette.
 			var addins = new CategoryBox ("Add-ins");
-			CreateButtons (PintaCore.Actions.Addins.GetAddinActions (), addins.Body);
+			CreateButtons ("Add-ins", PintaCore.Actions.Addins.GetAddinActions (), addins.Body);
 			paletteRow.Add (addins);
 
 			vbox.Add (paletteRow);
@@ -162,8 +162,8 @@ namespace Pinta
 			main5.Spacing = spacing;
 			var quit = new CategoryBox ("Quit");
 			var help = new CategoryBox ("Help");
-			CreateButtons (PintaCore.Actions.File.GetQuitActions (), quit.Body);
-			CreateButtons (PintaCore.Actions.Help.GetHelpActions (), help.Body);
+			CreateButtons ("Quit", PintaCore.Actions.File.GetQuitActions (), quit.Body);
+			CreateButtons ("Help", PintaCore.Actions.Help.GetHelpActions (), help.Body);
 			main5.Add (quit);
 			main5.Add (help);
 			vbox.Add (main5);
@@ -180,11 +180,6 @@ namespace Pinta
 			PintaCore.Effects.AddEffectEvent += AddEffect;
 			PintaCore.Effects.RemoveEffectEvent += RemoveEffect;
 			PintaCore.Effects.AddAdjustmentEvent += AddAdjustment;
-		}
-
-		private static void LogButtonClick (CommandMapButton button)
-		{
-			Log ("User clicked button: " + button.Name);
 		}
 
         private static void Log (string message)
@@ -264,11 +259,11 @@ namespace Pinta
 			}
 		}
 
-		private void CreateButtons (Gtk.Action[] actions, Box box)
+		private void CreateButtons (string category_name, Gtk.Action[] actions, Box box)
 		{
 			foreach (var action in actions)
 			{
-				box.Add (new CommandMapButton (action));
+				box.Add (new CommandMapButton (category_name, action));
 			}
 		}
 
@@ -290,6 +285,7 @@ namespace Pinta
 			private static double[] most_recently_used_opacities;
 
 			public virtual string Name { get { return Label; } }
+            public string CategoryName { get; private set; }
 
 			static CommandMapButton ()
 			{
@@ -303,15 +299,17 @@ namespace Pinta
 
 			private double HighlightOpacity { get; set; }
 
-			public CommandMapButton ()
+			public CommandMapButton (string category_name)
 			{
+                CategoryName = category_name;
+
 				HighlightOpacity = 0.0;
 				Relief = ReliefStyle.None;
 
 				ButtonReleaseEvent += HandleButtonReleaseEvent;
 			}
 
-			public CommandMapButton (Gtk.Action action) : this ()
+			public CommandMapButton (string category_name, Gtk.Action action) : this (category_name)
 			{
 				action.ConnectProxy (this);
 
@@ -345,8 +343,8 @@ namespace Pinta
 
             [GLib.ConnectBefore]
 			protected void HandleButtonReleaseEvent (object o, ButtonReleaseEventArgs args)
-			{
-				LogButtonClick (this);
+            {
+                Log("Button clicked: " + CategoryName + " | " + Name);
 
 				if (max_most_recently_used == 0)
 					return;
@@ -382,7 +380,7 @@ namespace Pinta
 			public BaseTool Tool { get; private set; }
 			public override string Name { get { return Tool.Name; } }
 
-			public CommandMapToolButton (BaseTool tool) : base ()
+			public CommandMapToolButton (BaseTool tool) : base ("Tools")
 			{
 				Tool = tool;
 
@@ -443,7 +441,7 @@ namespace Pinta
 
 		private void AddAdjustment (BaseEffect adjustment, Gtk.Action action)
 		{
-			var button = new CommandMapButton (action);
+			var button = new CommandMapButton ("Adjustments", action);
 			AdjustmentsCommandMapBox.Add (button);
 			adjustment_command_map_buttons.Add (adjustment, button);
 		}
@@ -479,7 +477,7 @@ namespace Pinta
 				EffectsCommandMapBox.Add (command_map_box);
 			}
 
-			var button = new CommandMapButton (action);
+			var button = new CommandMapButton ("Effects", action);
 
 			command_map_button_boxes[action] = command_map_box;
 			command_map_box.Add (button);
