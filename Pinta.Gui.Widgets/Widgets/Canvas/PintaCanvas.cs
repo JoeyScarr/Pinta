@@ -58,12 +58,16 @@ namespace Pinta.Gui.Widgets
 			ButtonPressEvent += delegate (object sender, ButtonPressEventArgs e) {
 				if (PintaCore.Workspace.HasOpenDocuments)
 					PintaCore.Tools.CurrentTool.DoMouseDown (this, e, PintaCore.Workspace.WindowPointToCanvas (e.Event.X, e.Event.Y));
+
+                Logger.Log ("Started using tool: " + PintaCore.Tools.CurrentTool.Name);
 			};
 
 			// Give mouse release events to the current tool
 			ButtonReleaseEvent += delegate (object sender, ButtonReleaseEventArgs e) {
 				if (PintaCore.Workspace.HasOpenDocuments)
-					PintaCore.Tools.CurrentTool.DoMouseUp (this, e, PintaCore.Workspace.WindowPointToCanvas (e.Event.X, e.Event.Y));
+                    PintaCore.Tools.CurrentTool.DoMouseUp(this, e, PintaCore.Workspace.WindowPointToCanvas(e.Event.X, e.Event.Y));
+
+                Logger.Log("Finished using tool: " + PintaCore.Tools.CurrentTool.Name);
 			};
 
 			// Give mouse move events to the current tool
