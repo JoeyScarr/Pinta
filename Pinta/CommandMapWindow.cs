@@ -26,8 +26,6 @@ namespace Pinta
 		public HBox AdjustmentsCommandMapBox { get; private set; }
 		public VBox EffectsCommandMapBox { get; private set; }
 
-		private const string log_file = "cmd_map_log.txt";
-
 		static CommandMapWindow ()
 		{
 			Log ("New Pinta session started.");
@@ -189,13 +187,10 @@ namespace Pinta
 			Log ("User clicked button: " + button.Name);
 		}
 
-		public static void Log (string message)
-		{
-			using (var log = new StreamWriter (log_file, true))
-			{
-				log.WriteLine ("{0}: {1}", DateTime.Now, message);
-			}
-		}
+        private static void Log (string message)
+        {
+            Logger.Log (message);
+        }
 
 		public void On ()
 		{
