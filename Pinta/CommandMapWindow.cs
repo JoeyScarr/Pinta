@@ -327,28 +327,28 @@ namespace Pinta
 				Image.Show ();
 			}
 
-			protected override bool OnExposeEvent (EventExpose evnt)
-			{
-				if (HighlightOpacity > 0.0)
-				{
-					using (var cr = Gdk.CairoHelper.Create (evnt.Window))
-					{
-						var bg = Style.Background (StateType.Normal);
+            /*protected override bool OnExposeEvent (EventExpose evnt)
+            {
+                if (HighlightOpacity > 0.0)
+                {
+                    using (var cr = Gdk.CairoHelper.Create (evnt.Window))
+                    {
+                        var bg = Style.Background (StateType.Normal);
 
-						var fg = new Color ();
-						Color.Parse ("yellow", ref fg);
-						Colormap.AllocColor (ref fg, true, true);
+                        var fg = new Color ();
+                        Color.Parse ("yellow", ref fg);
+                        Colormap.AllocColor (ref fg, true, true);
 
-						var color = BlendColors (fg, bg, HighlightOpacity);
+                        var color = BlendColors (fg, bg, HighlightOpacity);
 
-						cr.FillRoundedRectangle (evnt.Area.ToCairoRectangle (), 5, color.ToCairoColor ());
-					}
-				}
+                        cr.FillRoundedRectangle (evnt.Area.ToCairoRectangle (), 5, color.ToCairoColor ());
+                    }
+                }
 
-				return base.OnExposeEvent (evnt);
-			}
+                return base.OnExposeEvent (evnt);
+            }*/
 
-			[GLib.ConnectBefore]
+            [GLib.ConnectBefore]
 			protected void HandleButtonReleaseEvent (object o, ButtonReleaseEventArgs args)
 			{
 				LogButtonClick (this);
