@@ -312,6 +312,14 @@ namespace Pinta
 			dock = new DockFrame ();
 			dock.CompactGuiLevel = 5;
 
+			// Toolbox pad
+			var toolboxpad = new ToolBoxPad ();
+			toolboxpad.Initialize (dock, show_pad);
+		
+			// Palette pad
+			var palettepad = new ColorPalettePad ();
+			palettepad.Initialize (dock, show_pad);
+
 			// Canvas pad
 			canvas_pad = new CanvasPad ();
 			canvas_pad.Initialize (dock, show_pad);
