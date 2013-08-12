@@ -170,7 +170,6 @@
     <Compile Include="Pads\LayersPad.cs" />
     <Compile Include="Pads\IDockPad.cs" />
     <Compile Include="Pads\ToolBoxPad.cs" />
-    <Compile Include="Settings.cs" />
     <Compile Include="WindowShell.cs" />
     <Compile Include="gtk-gui\generated.cs" />
     <Compile Include="Main.cs" />
