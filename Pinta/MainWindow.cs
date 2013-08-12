@@ -59,7 +59,7 @@ namespace Pinta
 			cmd_map = new CommandMapWindow ();
 
 			// Move the tool toolbar into the command map window.
-			PintaCore.Chrome.ToolToolBar.Reparent (cmd_map.ToolToolbarBox);
+			//PintaCore.Chrome.ToolToolBar.Reparent (cmd_map.ToolToolbarBox);
 
 			// Initialize interface things
 			window_shell.AddAccelGroup (PintaCore.Actions.AccelGroup);

@@ -21,7 +21,7 @@ namespace Pinta
 		private Dictionary<BaseEffect, Button> adjustment_command_map_buttons;
 		private List<Widget> important_widgets; // The widgets which should show through the grey mask.
 
-		public HBox ToolToolbarBox { get; private set; }
+		//public HBox ToolToolbarBox { get; private set; }
 		public HBox AdjustmentsCommandMapBox { get; private set; }
 		public VBox EffectsCommandMapBox { get; private set; }
 
@@ -95,8 +95,8 @@ namespace Pinta
 			toolsBox.Add (tools1);
 			tools2 = new HBox ();
 			toolsBox.Add (tools2);
-			ToolToolbarBox = new HBox ();
-			toolsBox.Add (ToolToolbarBox);
+			//ToolToolbarBox = new HBox ();
+			//toolsBox.Add (ToolToolbarBox);
 			tools.Body.Add (toolsBox);
 			vbox.Add (tools);
 
