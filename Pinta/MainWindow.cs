@@ -126,7 +126,7 @@ namespace Pinta
                 Logger.Log ("Key press: " + e.Event.Key.ToString ());
             }
 
-			if (e.Event.Key == Gdk.Key.Alt_L || e.Event.Key == Gdk.Key.Alt_R)
+            if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R)
 			{
 				cmd_map.On ();
 			}
@@ -146,7 +146,7 @@ namespace Pinta
             pressed_keys.Remove (e.Event.Key);
             Logger.Log ("Key release: " + e.Event.Key.ToString ());
 
-			if (e.Event.Key == Gdk.Key.Alt_L || e.Event.Key == Gdk.Key.Alt_R)
+            if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R)
 			{
 				cmd_map.Off ();
 			}
