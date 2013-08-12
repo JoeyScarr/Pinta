@@ -5,7 +5,6 @@ using Gtk;
 using Gdk;
 using Pinta.Core;
 using Pinta.Gui.Widgets;
-using MonoDevelop.Components.Docking;
 
 namespace Pinta
 {
@@ -49,29 +48,17 @@ namespace Pinta
 			VBox vbox = new VBox ();
 			vbox.Spacing = spacing;
 
-			var dock = new DockFrame ();
-			dock.CompactGuiLevel = 5;
+			VBox dock_container = new VBox ();
 
 			container.Add (vbox);
-			container.Add (dock);
+			container.Add (dock_container);
 			frame.Add (container);
 			Add (frame);
 
-			// Add the dock pads.
-			// Open Images pad
-			var open_images_pad = new OpenImagesPad ();
-			open_images_pad.Initialize (dock);
-
-			// Layer pad
-			var layers_pad = new LayersPad ();
-			layers_pad.Initialize (dock);
-
-			// History pad
-			var history_pad = new HistoryPad ();
-			history_pad.Initialize (dock);
-
-			dock.CreateLayout ("Default", false);
-			dock.CurrentLayout = "Default";
+			// Add the dock panels.
+			dock_container.Add (new OpenImagesListWidget ());
+			dock_container.Add (new LayersListWidget ());
+			dock_container.Add (new HistoryTreeView ());
 
 			// Add the main toolbars.
 			HBox main1 = new HBox ();
