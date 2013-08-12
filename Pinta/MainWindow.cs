@@ -313,8 +313,8 @@ namespace Pinta
 			dock.CompactGuiLevel = 5;
 
 			// Toolbox pad
-			var toolboxpad = new ToolBoxPad ();
-			toolboxpad.Initialize (dock, show_pad);
+			//var toolboxpad = new ToolBoxPad ();
+			//toolboxpad.Initialize (dock, show_pad);
 		
 			// Palette pad
 			var palettepad = new ColorPalettePad ();

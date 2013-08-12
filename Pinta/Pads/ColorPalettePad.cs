@@ -42,7 +42,7 @@ namespace Pinta
 			palette_item.Label = Catalog.GetString ("Palette");
 			palette_item.Content = palette;
 			palette_item.Icon = PintaCore.Resources.GetIcon ("Pinta.png");
-			palette_item.DefaultLocation = "Toolbox/Bottom";
+			//palette_item.DefaultLocation = "Toolbox/Bottom";
 			palette_item.Behavior |= DockItemBehavior.CantClose;
 			palette_item.DefaultWidth = 65;
 
