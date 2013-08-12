@@ -318,6 +318,18 @@ namespace Pinta
 
 			sw = canvas_pad.ScrolledWindow;
 
+			// Layer pad
+			var layers_pad = new LayersPad ();
+			layers_pad.Initialize (dock, show_pad);
+
+			// Open Images pad
+			var open_images_pad = new OpenImagesPad ();
+			open_images_pad.Initialize (dock, show_pad);
+
+			// History pad
+			var history_pad = new HistoryPad ();
+			history_pad.Initialize (dock, show_pad);
+
 			container.PackStart (dock, true, true, 0);
 			
 			string layout_file = System.IO.Path.Combine (PintaCore.Settings.GetUserSettingsDirectory (), "layouts.xml");

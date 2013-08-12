@@ -41,24 +41,11 @@ namespace Pinta
 			mask_window = new CommandMapMaskWindow ();
 
 			var frame = new Frame ();
-			HBox container = new HBox ();
-			container.BorderWidth = spacing;
-			container.Spacing = spacing;
-
 			VBox vbox = new VBox ();
 			vbox.Spacing = spacing;
-
-			VBox dock_container = new VBox ();
-
-			container.Add (vbox);
-			container.Add (dock_container);
-			frame.Add (container);
+            vbox.BorderWidth = spacing;
+			frame.Add (vbox);
 			Add (frame);
-
-			// Add the dock panels.
-			dock_container.Add (new OpenImagesListWidget ());
-			dock_container.Add (new LayersListWidget ());
-			dock_container.Add (new HistoryTreeView ());
 
 			// Add the main toolbars.
 			HBox main1 = new HBox ();
