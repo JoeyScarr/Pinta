@@ -107,10 +107,10 @@ namespace Pinta
 			paletteRow.Spacing = spacing;
 
 			var paletteBox = new CategoryBox ("Palette");
-			var palette = new ColorPaletteWidget (false);
-			palette.Initialize ();
-			DarkenBackground (palette);
-			paletteBox.Body.Add (palette);
+			//var palette = new ColorPaletteWidget (false);
+			//palette.Initialize ();
+			//DarkenBackground (palette);
+			//paletteBox.Body.Add (palette);
 			CreateButtons ("Palette", PintaCore.Actions.Edit.GetPaletteActions (), paletteBox.Body);
 			paletteRow.Add (paletteBox);
 
