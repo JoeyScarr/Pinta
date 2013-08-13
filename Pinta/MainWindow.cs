@@ -128,7 +128,7 @@ namespace Pinta
 
             if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R)
 			{
-				cmd_map.On ();
+				cmd_map.On (true);
 			}
 
 			// Give the Canvas (and by extension the tools)
@@ -148,7 +148,7 @@ namespace Pinta
 
             if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R)
 			{
-				cmd_map.Off ();
+				cmd_map.Off (true);
 			}
 
 			// Give the Canvas (and by extension the tools)
@@ -162,7 +162,7 @@ namespace Pinta
 
 		void MainWindow_FocusOutEvent (object o, EventArgs e)
 		{
-			cmd_map.Off ();
+			cmd_map.Off (true);
 		}
 
 		// Check if the mouse pointer is on the canvas
@@ -282,7 +282,7 @@ namespace Pinta
 		{
             var tool_toolbar = window_shell.CreateToolToolBar(delegate(object o, EventArgs e) {
                 Logger.Log("\"Commands\" button pressed");
-                cmd_map.On();
+                cmd_map.On(false);
             });
 
 			tool_toolbar.ToolbarStyle = ToolbarStyle.Icons;

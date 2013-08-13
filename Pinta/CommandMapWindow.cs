@@ -25,6 +25,8 @@ namespace Pinta
 		public HBox AdjustmentsCommandMapBox { get; private set; }
 		public VBox EffectsCommandMapBox { get; private set; }
 
+        private bool stay_open_when_clicked;
+
 		static CommandMapWindow ()
 		{
 			Log ("New Pinta session started.");
@@ -163,8 +165,10 @@ namespace Pinta
             Logger.Log (message);
         }
 
-		public void On ()
+        public void On(bool stay_open_when_clicked)
 		{
+            this.stay_open_when_clicked = stay_open_when_clicked;
+
 			if (IsMapped)
 				return;
 
@@ -173,9 +177,9 @@ namespace Pinta
 			//mask_window.ShowAll ();
 		}
 
-		public void Off ()
+		public void Off (bool force_close)
 		{
-			if (!IsMapped)
+            if (!IsMapped || (stay_open_when_clicked && !force_close))
 				return;
 
 			Log ("Command map window hidden");
@@ -195,7 +199,7 @@ namespace Pinta
             protected override bool OnButtonReleaseEvent(EventButton evnt)
             {
                 base.OnButtonReleaseEvent(evnt);
-                CMWindow.Off();
+                CMWindow.Off(false);
                 return true;
             }
         }
