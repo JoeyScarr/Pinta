@@ -8,7 +8,7 @@ using Pinta.Gui.Widgets;
 
 namespace Pinta
 {
-	public class CommandMapWindow : Gtk.Window
+    public class CommandMapWindow : Gtk.Window
 	{
 		private HBox tools1;
 		private HBox tools2;
@@ -40,12 +40,14 @@ namespace Pinta
 
 			mask_window = new CommandMapMaskWindow ();
 
+            var eventBox = new CommandMapEventBox(this);
 			var frame = new Frame ();
 			VBox vbox = new VBox ();
 			vbox.Spacing = spacing;
             vbox.BorderWidth = spacing;
 			frame.Add (vbox);
-			Add (frame);
+            eventBox.Add(frame);
+			Add (eventBox);
 
 			// Add the main toolbars.
 			HBox main1 = new HBox ();
@@ -154,7 +156,7 @@ namespace Pinta
 			PintaCore.Effects.AddEffectEvent += AddEffect;
 			PintaCore.Effects.RemoveEffectEvent += RemoveEffect;
 			PintaCore.Effects.AddAdjustmentEvent += AddAdjustment;
-		}
+        }
 
         private static void Log (string message)
         {
@@ -181,7 +183,24 @@ namespace Pinta
 			//mask_window.HideAll ();
 		}
 
-		public void RecreateMask ()
+        private class CommandMapEventBox : EventBox
+        {
+            private CommandMapWindow CMWindow;
+
+            public CommandMapEventBox(CommandMapWindow cm_window)
+            {
+                CMWindow = cm_window;
+            }
+
+            protected override bool OnButtonReleaseEvent(EventButton evnt)
+            {
+                base.OnButtonReleaseEvent(evnt);
+                CMWindow.Off();
+                return true;
+            }
+        }
+
+        public void RecreateMask()
 		{
 			int width, height;
 			GetSize (out width, out height);
@@ -279,8 +298,6 @@ namespace Pinta
 
 				HighlightOpacity = 0.0;
 				Relief = ReliefStyle.None;
-
-				ButtonReleaseEvent += HandleButtonReleaseEvent;
 			}
 
 			public CommandMapButton (string category_name, Gtk.Action action) : this (category_name)
@@ -315,38 +332,39 @@ namespace Pinta
                 return base.OnExposeEvent (evnt);
             }*/
 
-            [GLib.ConnectBefore]
-			protected void HandleButtonReleaseEvent (object o, ButtonReleaseEventArgs args)
+            protected override bool OnButtonReleaseEvent(EventButton evnt)
             {
                 Log("Button clicked: " + CategoryName + " | " + Name);
+                base.OnButtonReleaseEvent(evnt);
+                return false;
 
-				if (max_most_recently_used == 0)
-					return;
+                //if (max_most_recently_used == 0)
+                //    return;
 
-				// If we haven't hit the max number of recently used buttons
-				// yet, we have to start at some offset into the opacities
-				// array.
-				int i = max_most_recently_used - most_recently_used.Count;
+                //// If we haven't hit the max number of recently used buttons
+                //// yet, we have to start at some offset into the opacities
+                //// array.
+                //int i = max_most_recently_used - most_recently_used.Count;
 
-				// If a button occurs in the list more than once, it's opacity
-				// will be set more than once but it will be overriden last by
-				// the highest opacity (it's most recenty use).
-				foreach (var button in most_recently_used)
-				{
-					button.HighlightOpacity = most_recently_used_opacities[i];
-					button.QueueDraw ();
-					i++;
-				}
+                //// If a button occurs in the list more than once, its opacity
+                //// will be set more than once but it will be overriden last by
+                //// the highest opacity (its most recent use).
+                //foreach (var button in most_recently_used)
+                //{
+                //    button.HighlightOpacity = most_recently_used_opacities[i];
+                //    button.QueueDraw ();
+                //    i++;
+                //}
 
-				if (most_recently_used.Count == max_most_recently_used)
-				{
-					most_recently_used.RemoveFirst ();
-				}
+                //if (most_recently_used.Count == max_most_recently_used)
+                //{
+                //    most_recently_used.RemoveFirst ();
+                //}
 
-				most_recently_used.AddLast (this);
-				HighlightOpacity = 1.0;
-				QueueDraw ();
-			}
+                //most_recently_used.AddLast (this);
+                //HighlightOpacity = 1.0;
+                //QueueDraw ();
+            }
 		}
 
 		private class CommandMapToolButton : CommandMapButton
