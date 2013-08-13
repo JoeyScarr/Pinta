@@ -77,9 +77,9 @@ namespace Pinta
 			var zoom = new CategoryBox ("Zoom");
 			var transform = new CategoryBox ("Transform");
 			CreateButtons ("Zoom", PintaCore.Actions.View.GetZoomActions (), zoom.Body);
-			CreateButtons ("Transform", PintaCore.Actions.Image.GetTransformActions (), transform.Body);
+            CreateButtons("Transform", PintaCore.Actions.Image.GetTransformActions(), transform.Body);
+            main3.Add(transform);
 			main3.Add (zoom);
-			main3.Add (transform);
 			vbox.Add (main3);
 
 			HBox main4 = new HBox ();
@@ -99,35 +99,22 @@ namespace Pinta
 			toolsBox.Add (tools1);
 			tools2 = new HBox ();
 			toolsBox.Add (tools2);
-			//ToolToolbarBox = new HBox ();
-			//toolsBox.Add (ToolToolbarBox);
 			tools.Body.Add (toolsBox);
 			vbox.Add (tools);
 
-			// Add color palette.
-			var paletteRow = new HBox ();
-			paletteRow.Spacing = spacing;
+			// Add adjustments and add-ins manager.
+            var adjustmentsRow = new HBox();
 
-			var paletteBox = new CategoryBox ("Palette");
-			//var palette = new ColorPaletteWidget (false);
-			//palette.Initialize ();
-			//DarkenBackground (palette);
-			//paletteBox.Body.Add (palette);
-			CreateButtons ("Palette", PintaCore.Actions.Edit.GetPaletteActions (), paletteBox.Body);
-			paletteRow.Add (paletteBox);
-
-			// Add add-ins manager on same line as palette.
-			var addins = new CategoryBox ("Add-ins");
-			CreateButtons ("Add-ins", PintaCore.Actions.Addins.GetAddinActions (), addins.Body);
-			paletteRow.Add (addins);
-
-			vbox.Add (paletteRow);
-
-			// Add adjustments.
-			var adjustments = new CategoryBox ("Adjustments");
+            var adjustments = new CategoryBox("Adjustments");
 			AdjustmentsCommandMapBox = new HBox ();
 			adjustments.Body.Add (AdjustmentsCommandMapBox);
-			vbox.Add (adjustments);
+            adjustmentsRow.Add(adjustments);
+
+            var addins = new CategoryBox("Add-ins");
+            CreateButtons("Add-ins", PintaCore.Actions.Addins.GetAddinActions(), addins.Body);
+            adjustmentsRow.Add(addins);
+
+			vbox.Add (adjustmentsRow);
 
 			// Add effects.
 			var effects = new CategoryBox ("Effects");
@@ -135,15 +122,18 @@ namespace Pinta
 			effects.Body.Add (EffectsCommandMapBox);
 			vbox.Add (effects);
 
-			// Add quit and help frames.
+			// Add quit, help, and palette frames.
 			HBox main5 = new HBox ();
 			main5.Spacing = spacing;
 			var quit = new CategoryBox ("Quit");
-			var help = new CategoryBox ("Help");
+            var help = new CategoryBox ("Help");
+            var palette = new CategoryBox ("Palette");
 			CreateButtons ("Quit", PintaCore.Actions.File.GetQuitActions (), quit.Body);
-			CreateButtons ("Help", PintaCore.Actions.Help.GetHelpActions (), help.Body);
+            CreateButtons ("Help", PintaCore.Actions.Help.GetHelpActions (), help.Body);
+            CreateButtons ("Palette", PintaCore.Actions.Edit.GetPaletteActions (), palette.Body);
 			main5.Add (quit);
 			main5.Add (help);
+            main5.Add (palette);
 			vbox.Add (main5);
 
 			PintaCore.Tools.ToolAdded += HandleToolAdded;
