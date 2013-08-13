@@ -26,6 +26,7 @@
 
 using System;
 using Gtk;
+using Pinta.Core;
 
 namespace Pinta
 {
@@ -84,6 +85,25 @@ namespace Pinta
 			r.Height = 0;
 			args.Requisition = r;
 		}
+
+        public Toolbar CreateToolToolBar (EventHandler cm_button_handler)
+        {
+            HBox hbox = new HBox();
+
+            main_toolbar = new Toolbar();
+            main_toolbar.Name = "tool_toolbar";
+            hbox.PackStart(main_toolbar, true, true, 0);
+
+            Button cm_button = new Button();
+            cm_button.Label = "Commands (Press <Ctrl>)";
+            cm_button.Clicked += cm_button_handler;
+            hbox.PackEnd(cm_button, false, false, 0);
+
+            menu_layout.PackStart(hbox, false, false, 0);
+            hbox.ShowAll();
+
+            return main_toolbar;
+        }
 
 		public Toolbar CreateToolBar (string name)
 		{

@@ -280,7 +280,10 @@ namespace Pinta
 		
 		private void CreateToolToolBar (WindowShell shell)
 		{
-			var tool_toolbar = window_shell.CreateToolBar ("tool_toolbar");
+            var tool_toolbar = window_shell.CreateToolToolBar(delegate(object o, EventArgs e) {
+                Logger.Log("\"Commands\" button pressed");
+                cmd_map.On();
+            });
 
 			tool_toolbar.ToolbarStyle = ToolbarStyle.Icons;
 			tool_toolbar.IconSize = IconSize.SmallToolbar;
