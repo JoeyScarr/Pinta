@@ -23,11 +23,6 @@ namespace Pinta
 
         private bool stay_open_when_clicked;
 
-		static CommandMapWindow ()
-		{
-			Log ("New Pinta session started.");
-		}
-
 		public CommandMapWindow () : base (Gtk.WindowType.Popup)
 		{
 			const int spacing = 5;
