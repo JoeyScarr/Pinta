@@ -47,6 +47,9 @@ namespace Pinta
 		
 		public MainWindow ()
 		{
+            // Initialize logging
+            Logger.Initialize ();
+
 			// Build our window
 			CreateWindow ();
 
