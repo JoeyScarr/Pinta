@@ -12,7 +12,6 @@ configure
 install-sh
 missing
 obj
-pinta
 pinta.pc
 intltool-extract.in
 intltool-merge.in
