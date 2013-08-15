@@ -13,10 +13,10 @@ namespace Pinta.Core
         public static void Initialize()
         {
             Directory.CreateDirectory(log_dir);
-            log_file = Path.Combine(log_dir, DateTime.Now.ToString("yyyy.MM.dd hh.mm.ss") + ".txt");
+            log_file = Path.Combine(log_dir, "Command Map - " + DateTime.Now.ToString("yyyy.MM.dd HH.mm.ss") + ".txt");
 
             stopwatch = new Stopwatch();
-            Log("New Pinta session started");
+            Log("New command map Pinta session started");
             stopwatch.Start();
         }
 
