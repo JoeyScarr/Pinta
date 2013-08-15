@@ -13,7 +13,7 @@ namespace Pinta.Core
         public static void Initialize()
         {
             Directory.CreateDirectory(log_dir);
-            log_file = Path.Combine(log_dir, "Standard UI - " + DateTime.Now.ToString("yyyy.MM.dd hh.mm.ss") + ".txt");
+            log_file = Path.Combine(log_dir, "Standard UI - " + DateTime.Now.ToString("yyyy.MM.dd HH.mm.ss") + ".txt");
 
             stopwatch = new Stopwatch();
             Log("New standard UI Pinta session started");
