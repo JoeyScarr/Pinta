@@ -13,15 +13,11 @@ namespace Pinta
 		private HBox tools1;
 		private HBox tools2;
 
-		private CommandMapMaskWindow mask_window;
-
 		private List<HBox> command_map_boxes;
 		private Dictionary<Gtk.Action, Button> command_map_buttons;
 		private Dictionary<Gtk.Action, HBox> command_map_button_boxes;
 		private Dictionary<BaseEffect, Button> adjustment_command_map_buttons;
-		private List<Widget> important_widgets; // The widgets which should show through the grey mask.
 
-		//public HBox ToolToolbarBox { get; private set; }
 		public HBox AdjustmentsCommandMapBox { get; private set; }
 		public VBox EffectsCommandMapBox { get; private set; }
 
@@ -39,8 +35,6 @@ namespace Pinta
 			TransientFor = PintaCore.Chrome.MainWindow;
 			WindowPosition = WindowPosition.CenterOnParent;
 			Opacity = 0.9;
-
-			mask_window = new CommandMapMaskWindow ();
 
             var eventBox = new CommandMapEventBox(this);
 			var frame = new Frame ();
@@ -143,7 +137,6 @@ namespace Pinta
 			command_map_buttons = new Dictionary<Gtk.Action, Button> ();
 			command_map_button_boxes = new Dictionary<Gtk.Action, HBox> ();
 			adjustment_command_map_buttons = new Dictionary<BaseEffect, Button> ();
-			important_widgets = new List<Widget> ();
 
 			PintaCore.Effects.AddEffectEvent += AddEffect;
 			PintaCore.Effects.RemoveEffectEvent += RemoveEffect;
@@ -164,7 +157,6 @@ namespace Pinta
 
 			Log ("Command map window shown");
 			ShowAll ();
-			//mask_window.ShowAll ();
 		}
 
 		public void Off (bool force_close)
@@ -174,7 +166,6 @@ namespace Pinta
 
 			Log ("Command map window hidden");
 			HideAll ();
-			//mask_window.HideAll ();
 		}
 
         private class CommandMapEventBox : EventBox
@@ -193,58 +184,6 @@ namespace Pinta
                 return true;
             }
         }
-
-        public void RecreateMask()
-		{
-			int width, height;
-			GetSize (out width, out height);
-
-			mask_window.Recreate (width, height, important_widgets);
-		}
-
-		private class CommandMapMaskWindow : Gtk.Window
-		{
-			public CommandMapMaskWindow () : base (Gtk.WindowType.Popup)
-			{
-				TransientFor = PintaCore.Chrome.MainWindow;
-				WindowPosition = WindowPosition.CenterOnParent;
-				Opacity = 0.6;
-			}
-
-			public void Recreate (int width, int height, List<Widget> widgets)
-			{
-				Resize (width, height);
-
-				var image = new Cairo.ImageSurface (Cairo.Format.Argb32, width, height);
-				using (var cr = new Cairo.Context (image))
-				{
-					cr.Operator = Cairo.Operator.Source;
-
-					cr.Rectangle (0, 0, width, height);
-					cr.SetSourceRGBA (0, 0, 0, 1);
-					cr.Fill ();
-
-					foreach (var widget in widgets)
-					{
-						int w, h, x, y;
-						w = widget.Allocation.Width;
-						h = widget.Allocation.Height;
-						widget.TranslateCoordinates (widget.Toplevel, 0, 0, out x, out y);
-
-						cr.Rectangle (x, y, w, h);
-						cr.SetSourceRGBA (0, 0, 0, 0);
-						cr.Fill ();
-					}
-				}
-
-				var pixbuf = image.ToPixbuf ();
-				Pixmap pm, mask;
-				pixbuf.RenderPixmapAndMask (out pm, out mask, 1);
-				ShapeCombineMask (mask, 0, 0);
-				pm.Dispose ();
-				mask.Dispose ();
-			}
-		}
 
 		private void CreateButtons (string category_name, Gtk.Action[] actions, Box box)
 		{
@@ -266,31 +205,12 @@ namespace Pinta
 
 		private class CommandMapButton : Button
 		{
-			private const int max_most_recently_used = 10;
-			private static LinkedList<CommandMapButton> most_recently_used =
-				new LinkedList<CommandMapButton> ();
-			private static double[] most_recently_used_opacities;
-
 			public virtual string Name { get { return Label; } }
             public string CategoryName { get; private set; }
-
-			static CommandMapButton ()
-			{
-				most_recently_used_opacities = new double[max_most_recently_used];
-
-				for (int i = 0; i < max_most_recently_used; i++)
-				{
-					most_recently_used_opacities[i] = (double)i / max_most_recently_used;
-				}
-			}
-
-			private double HighlightOpacity { get; set; }
 
 			public CommandMapButton (string category_name)
 			{
                 CategoryName = category_name;
-
-				HighlightOpacity = 0.0;
 				Relief = ReliefStyle.None;
 			}
 
@@ -305,59 +225,11 @@ namespace Pinta
 				Image.Show ();
 			}
 
-            /*protected override bool OnExposeEvent (EventExpose evnt)
-            {
-                if (HighlightOpacity > 0.0)
-                {
-                    using (var cr = Gdk.CairoHelper.Create (evnt.Window))
-                    {
-                        var bg = Style.Background (StateType.Normal);
-
-                        var fg = new Color ();
-                        Color.Parse ("yellow", ref fg);
-                        Colormap.AllocColor (ref fg, true, true);
-
-                        var color = BlendColors (fg, bg, HighlightOpacity);
-
-                        cr.FillRoundedRectangle (evnt.Area.ToCairoRectangle (), 5, color.ToCairoColor ());
-                    }
-                }
-
-                return base.OnExposeEvent (evnt);
-            }*/
-
             protected override bool OnButtonReleaseEvent(EventButton evnt)
             {
                 Log("Button clicked: " + CategoryName + " | " + Name);
                 base.OnButtonReleaseEvent(evnt);
                 return false;
-
-                //if (max_most_recently_used == 0)
-                //    return;
-
-                //// If we haven't hit the max number of recently used buttons
-                //// yet, we have to start at some offset into the opacities
-                //// array.
-                //int i = max_most_recently_used - most_recently_used.Count;
-
-                //// If a button occurs in the list more than once, its opacity
-                //// will be set more than once but it will be overriden last by
-                //// the highest opacity (its most recent use).
-                //foreach (var button in most_recently_used)
-                //{
-                //    button.HighlightOpacity = most_recently_used_opacities[i];
-                //    button.QueueDraw ();
-                //    i++;
-                //}
-
-                //if (most_recently_used.Count == max_most_recently_used)
-                //{
-                //    most_recently_used.RemoveFirst ();
-                //}
-
-                //most_recently_used.AddLast (this);
-                //HighlightOpacity = 1.0;
-                //QueueDraw ();
             }
 		}
 
