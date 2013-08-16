@@ -146,10 +146,11 @@ namespace Pinta
 		[GLib.ConnectBefore]
 		void MainWindow_KeyReleaseEvent (object o, KeyReleaseEventArgs e)
         {
-            pressed_keys.Remove (e.Event.Key);
-            Logger.Log ("Key release: " + e.Event.Key.ToString ());
+            Gdk.Key key = e.Event.Key;
+            pressed_keys.Remove (key);
+            Logger.Log ("Key release: " + key.ToString ());
 
-            if (e.Event.Key == Gdk.Key.Control_L || e.Event.Key == Gdk.Key.Control_R)
+            if (key == Gdk.Key.Control_L || key == Gdk.Key.Control_R || key == Gdk.Key.Escape)
 			{
 				cmd_map.Off (true);
 			}
