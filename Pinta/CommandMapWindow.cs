@@ -93,6 +93,7 @@ namespace Pinta
 
 			// Add adjustments and add-ins manager.
             var adjustmentsRow = new HBox();
+            adjustmentsRow.Spacing = spacing;
 
             var adjustments = new CategoryBox("Adjustments");
 			AdjustmentsCommandMapBox = new HBox ();
