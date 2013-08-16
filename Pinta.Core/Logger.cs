@@ -10,13 +10,13 @@ namespace Pinta.Core
         private static string log_file;
         private static Stopwatch stopwatch;
 
-        public static void Initialize()
+        public static void Initialize(int sid, int block)
         {
             Directory.CreateDirectory(log_dir);
-            log_file = Path.Combine(log_dir, "Command Map - " + DateTime.Now.ToString("yyyy.MM.dd HH.mm.ss") + ".txt");
+            log_file = Path.Combine(log_dir, sid + " - CM " + block + " - " + DateTime.Now.ToString("yyyy.MM.dd HH.mm.ss") + ".txt");
 
             stopwatch = new Stopwatch();
-            Log("New command map Pinta session started");
+            Log("New command map Pinta session started. Subject ID: " + sid + ". Block Number: " + block);
             stopwatch.Start();
         }
 

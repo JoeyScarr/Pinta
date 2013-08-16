@@ -52,9 +52,6 @@ namespace Pinta
 		{
             pressed_keys = new HashSet<Gdk.Key>();
 
-            // Set up logging.
-            Logger.Initialize ();
-
 			// Build our window
 			CreateWindow ();
 

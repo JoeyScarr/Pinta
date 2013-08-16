@@ -64,9 +64,13 @@ namespace Pinta
 			}
 
 			int threads = -1;
+            int sid = -1;
+            int block = -1;
 			
 			var p = new OptionSet () {
-				{ "rt|render-threads=", Catalog.GetString ("number of threads to use for rendering"), (int v) => threads = v }
+				{ "rt|render-threads=", Catalog.GetString ("number of threads to use for rendering"), (int v) => threads = v },
+				{ "sid|subject-id=", "id of study subject", (int v) => sid = v },
+				{ "blk|block=", "id of current block", (int v) => block = v }
 			};
 
 			List<string> extra;
@@ -77,7 +81,10 @@ namespace Pinta
 				Console.Write ("Pinta: ");
 				Console.WriteLine (e.Message);
 				return;
-			}
+            }
+
+            // Set up logging.
+            Logger.Initialize(sid, block);
 
 			GLib.ExceptionManager.UnhandledException += new GLib.UnhandledExceptionHandler (ExceptionManager_UnhandledException);
 			
