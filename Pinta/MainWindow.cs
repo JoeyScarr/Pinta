@@ -118,6 +118,14 @@ namespace Pinta
 			PintaCore.Actions.View.ZoomToWindow.Activated += new EventHandler (ZoomToWindow_Activated);
 			PintaCore.Actions.View.ZoomToSelection.Activated += new EventHandler (ZoomToSelection_Activated);
 			PintaCore.Workspace.ActiveDocumentChanged += ActiveDocumentChanged;
+
+            ButtonPressEventHandler close_cmd_map = delegate(object sender, ButtonPressEventArgs e) {
+                cmd_map.Off(false);
+            };
+
+            // Tell some background stuff to close the CM when it is clicked.
+            PintaCore.Chrome.Canvas.ButtonPressEvent += close_cmd_map;
+            dock.ButtonPressEvent += close_cmd_map;
 		}
 
 		[GLib.ConnectBefore]
