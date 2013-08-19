@@ -90,6 +90,9 @@ namespace Pinta.Core
 			Deselect.Sensitive = false;
 			EraseSelection.Sensitive = false;
 			FillSelection.Sensitive = false;
+
+            Logger.AddMenuItemLogging("Edit", Undo, Redo, Cut, Copy, CopyMerged, Paste, PasteIntoNewLayer, PasteIntoNewImage, EraseSelection,
+                FillSelection, InvertSelection, SelectAll, Deselect, LoadPalette, SavePalette, ResetPalette, ResizePalette);
 		}
 
 		#region Initialization

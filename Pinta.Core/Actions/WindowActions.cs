@@ -46,7 +46,9 @@ namespace Pinta.Core
 			CloseAll = new Gtk.Action ("CloseAll", Catalog.GetString ("Close All"), null, Stock.Close);
 
 			OpenWindows = new List<RadioAction> ();
-			action_menu_items = new Dictionary<RadioAction,CheckMenuItem> ();
+            action_menu_items = new Dictionary<RadioAction, CheckMenuItem>();
+
+            Logger.AddMenuItemLogging("Window", SaveAll, CloseAll);
 		}
 
 		public List<RadioAction> OpenWindows { get; private set; }

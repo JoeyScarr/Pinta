@@ -74,7 +74,10 @@ namespace Pinta.Core
 			MoveLayerDown = new Gtk.Action ("MoveLayerDown", Catalog.GetString ("Move Layer Down"), null, "Menu.Layers.MoveLayerDown.png");
 			Properties = new Gtk.Action ("Properties", Catalog.GetString ("Layer Properties..."), null, "Menu.Layers.LayerProperties.png");
 
-			RotateZoom.Sensitive = false;
+            RotateZoom.Sensitive = false;
+
+            Logger.AddMenuItemLogging("Layers", AddNewLayer, DeleteLayer, DuplicateLayer, MergeLayerDown, ImportFromFile, FlipHorizontal,
+                FlipVertical, RotateZoom, MoveLayerUp, MoveLayerDown, Properties);
 		}
 
 		#region Initialization

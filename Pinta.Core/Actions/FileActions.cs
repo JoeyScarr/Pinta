@@ -48,14 +48,14 @@ namespace Pinta.Core
 		public event EventHandler BeforeQuit;
 		public event EventHandler<ModifyCompressionEventArgs> ModifyCompression;
 		public event EventHandler<DocumentCancelEventArgs> SaveDocument;
-		
+
 		public FileActions ()
 		{
 			New = new Gtk.Action ("New", Catalog.GetString ("New..."), null, Stock.New);
 			NewScreenshot = new Gtk.Action ("NewScreenshot", Catalog.GetString ("New Screenshot..."), null, Stock.Fullscreen);
 			Open = new Gtk.Action ("Open", Catalog.GetString ("Open..."), null, Stock.Open);
 			OpenRecent = new RecentAction ("OpenRecent", Catalog.GetString ("Open Recent"), null, Stock.Open, RecentManager.Default);
-			
+
 			RecentFilter recentFilter = new RecentFilter ();
 			recentFilter.AddApplication ("Pinta");
 			
@@ -73,7 +73,9 @@ namespace Pinta.Core
 			Save.IsImportant = true;
 			
 			Close.Sensitive = false;
-			Print.Sensitive = false;
+            Print.Sensitive = false;
+
+            Logger.AddMenuItemLogging("File", New, NewScreenshot, Open, Close, Save, SaveAs, Print, Exit);
 		}
 
 		#region Initialization

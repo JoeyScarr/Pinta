@@ -90,7 +90,10 @@ namespace Pinta.Core
 
 			// Make sure these are the same group so only one will be selected at a time
 			Inches.Group = Pixels.Group;
-			Centimeters.Group = Pixels.Group;
+            Centimeters.Group = Pixels.Group;
+
+            Logger.AddMenuItemLogging("View", ZoomIn, ZoomOut, ZoomToWindow, ZoomToSelection, ActualSize, ToolBar, PixelGrid, Rulers, Fullscreen);
+            Logger.AddMenuItemLogging("View | Ruler Units", Pixels, Inches, Centimeters);
 		}
 
 		#region Initialization

@@ -50,7 +50,9 @@ namespace Pinta.Core
 			Website = new Gtk.Action ("Website", Catalog.GetString ("Pinta Website"), null, "Menu.Help.Website.png");
 			Bugs = new Gtk.Action ("Bugs", Catalog.GetString ("File a Bug"), null, "Menu.Help.Bug.png");
 			Translate = new Gtk.Action ("Translate", Catalog.GetString ("Translate This Application"), null, "Menu.Help.Translate.png");
-			About = new Gtk.Action ("About", Catalog.GetString ("About"), null, Stock.About);
+            About = new Gtk.Action("About", Catalog.GetString("About"), null, Stock.About);
+
+            Logger.AddMenuItemLogging("Help", Website, Bugs, Translate, About);
 		}
 
 		#region Initialization
