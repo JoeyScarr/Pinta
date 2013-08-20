@@ -64,62 +64,52 @@ namespace Pinta.Core
 		{
 			// File menu
 			ImageMenuItem file = (ImageMenuItem)menu.Children[0];
-            file.Submenu = new Menu();
+			file.Submenu = new Menu ();
 			File.CreateMainMenu ((Menu)file.Submenu);
-            Logger.AddMenuLogging(file);
 			
 			//Edit menu
 			ImageMenuItem edit = (ImageMenuItem)menu.Children[1];
-            edit.Submenu = new Menu();
-            Edit.CreateMainMenu((Menu)edit.Submenu);
-            Logger.AddMenuLogging(edit);
+			edit.Submenu = new Menu ();
+			Edit.CreateMainMenu ((Menu)edit.Submenu);
 			
 			// View menu
 			ImageMenuItem view = (ImageMenuItem)menu.Children[2];
 			View.CreateMainMenu ((Menu)view.Submenu);
-            Logger.AddMenuLogging(view);
 			
 			// Image menu
 			ImageMenuItem image = (ImageMenuItem)menu.Children[3];
 			image.Submenu = new Menu ();
 			Image.CreateMainMenu ((Menu)image.Submenu);
-            Logger.AddMenuLogging(image);
 			
 			//Layers menu
 			ImageMenuItem layer = (ImageMenuItem)menu.Children[4];
 			layer.Submenu = new Menu ();
 			Layers.CreateMainMenu ((Menu)layer.Submenu);
-			Logger.AddMenuLogging(layer);
 			
 			//Adjustments menu
 			ImageMenuItem adj = (ImageMenuItem)menu.Children[5];
 			adj.Submenu = new Menu ();
 			Adjustments.CreateMainMenu ((Menu)adj.Submenu);
-            Logger.AddMenuLogging(adj);
-			
+
 			// Effects menu
 			ImageMenuItem eff = (ImageMenuItem)menu.Children[6];
 			eff.Submenu = new Menu ();
 			Effects.CreateMainMenu ((Menu)eff.Submenu);
-            Logger.AddMenuLogging(eff);
-			
+
 			// Add-ins menu
 			ImageMenuItem addins = (ImageMenuItem)menu.Children[7];
 			addins.Submenu = new Menu ();
 			Addins.CreateMainMenu ((Menu)addins.Submenu);
-            Logger.AddMenuLogging(addins);
-			
+
 			// Window menu
 			ImageMenuItem window = (ImageMenuItem)menu.Children[8];
 			window.Submenu = new Menu ();
 			Window.CreateMainMenu ((Menu)window.Submenu);
-			Logger.AddMenuLogging(window);
 			
 			//Help menu
 			ImageMenuItem help = (ImageMenuItem)menu.Children[9];
 			help.Submenu = new Menu ();
 			Help.CreateMainMenu ((Menu)help.Submenu);
-            Logger.AddMenuLogging(help);
 		}
 		
 		public void CreateToolBar (Gtk.Toolbar toolbar)

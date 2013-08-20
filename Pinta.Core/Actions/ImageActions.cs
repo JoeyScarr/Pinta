@@ -66,10 +66,8 @@ namespace Pinta.Core
 			RotateCCW = new Gtk.Action ("RotateCCW", Catalog.GetString ("Rotate 90° Counter-Clockwise"), null, "Menu.Image.Rotate90CCW.png");
 			Rotate180 = new Gtk.Action ("Rotate180", Catalog.GetString ("Rotate 180°"), null, "Menu.Image.Rotate180CW.png");
 			Flatten = new Gtk.Action ("Flatten", Catalog.GetString ("Flatten"), null, "Menu.Image.Flatten.png");
-
-            CropToSelection.Sensitive = false;
-
-            Logger.AddMenuItemLogging("Image", CropToSelection, AutoCrop, Resize, CanvasSize, FlipHorizontal, FlipVertical, RotateCW, RotateCCW, Rotate180, Flatten);
+			
+			CropToSelection.Sensitive = false;
 		}
 
 		#region Initialization

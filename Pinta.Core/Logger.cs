@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Diagnostics;
-using Gtk;
 
 namespace Pinta.Core
 {
@@ -29,29 +28,6 @@ namespace Pinta.Core
             using (var log = new StreamWriter(log_file, true))
             {
                 log.WriteLine(output);
-            }
-        }
-
-        public static void AddMenuLogging(MenuItem menu_item)
-        {
-            menu_item.Submenu.Shown += delegate(object o, EventArgs e) {
-                Logger.Log("\"" + menu_item.GetText() + "\" menu opened.");
-            };
-
-            menu_item.Submenu.Hidden += delegate(object o, EventArgs e)
-            {
-                Logger.Log("\"" + menu_item.GetText() + "\" menu closed.");
-            };
-        }
-
-        public static void AddMenuItemLogging(string category, params Gtk.Action[] actions)
-        {
-            foreach (var action in actions) {
-                string name = action.Label;
-
-                action.Activated += delegate(object o, EventArgs e) {
-                    Logger.Log("Selected \"" + name + "\" in \"" + category + "\"");
-                };
             }
         }
     }
