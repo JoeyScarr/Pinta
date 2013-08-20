@@ -41,6 +41,7 @@ namespace Pinta
 		ScrolledWindow sw;
 		DockFrame dock;
 		Menu show_pad;
+        MenuBar main_menu;
 
         HashSet<Gdk.Key> pressed_keys;
 
@@ -107,6 +108,8 @@ namespace Pinta
 			PintaCore.Actions.View.ZoomToWindow.Activated += new EventHandler (ZoomToWindow_Activated);
 			PintaCore.Actions.View.ZoomToSelection.Activated += new EventHandler (ZoomToSelection_Activated);
 			PintaCore.Workspace.ActiveDocumentChanged += ActiveDocumentChanged;
+
+            Logger.AddMenuLogging(main_menu);
 		}
 
 		[GLib.ConnectBefore]
@@ -190,7 +193,7 @@ namespace Pinta
 
 		private void CreateMainMenu (WindowShell shell)
 		{
-			var main_menu = window_shell.CreateMainMenu ("main_menu");
+			main_menu = window_shell.CreateMainMenu ("main_menu");
 
 			main_menu.Append (new Gtk.Action ("file", Catalog.GetString ("_File")).CreateMenuItem ());
 			main_menu.Append (new Gtk.Action ("edit", Catalog.GetString ("_Edit")).CreateMenuItem ());

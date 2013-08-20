@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Diagnostics;
+using Gtk;
 
 namespace Pinta.Core
 {
@@ -28,6 +29,50 @@ namespace Pinta.Core
             using (var log = new StreamWriter(log_file, true))
             {
                 log.WriteLine(output);
+            }
+        }
+
+        public static void AddMenuLogging(MenuBar menu)
+        {
+            AddMenuLogging(menu.Children, null);
+        }
+
+        public static void AddMenuLogging(Widget[] menu_items, string path)
+        {
+            foreach (Widget child in menu_items)
+            {
+                if (child is SeparatorMenuItem)
+                    continue;
+
+                MenuItem m = (MenuItem)child;
+                string name = m.GetText();
+                string full_name;
+
+                if (path == null)
+                    full_name = name;
+                else
+                    full_name = path + " | " + name;
+
+                m.ButtonPressEvent += delegate(object o, ButtonPressEventArgs e)
+                {
+                    Log("Menu item \"" + full_name + "\" clicked");
+                };
+
+                Menu submenu = m.Submenu as Menu;
+                if (submenu != null)
+                {
+                    submenu.Shown += delegate(object o, EventArgs e)
+                    {
+                        Log("Menu \"" + full_name + "\" opened");
+                    };
+
+                    submenu.Hidden += delegate(object o, EventArgs e)
+                    {
+                        Log("Menu \"" + full_name + "\" closed");
+                    };
+
+                    AddMenuLogging(submenu.Children, full_name);
+                }
             }
         }
     }
