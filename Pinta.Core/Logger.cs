@@ -75,5 +75,13 @@ namespace Pinta.Core
                 }
             }
         }
+
+        public static void AddToolLogging(ToolButton item)
+        {
+            item.Clicked += delegate(object o, EventArgs e)
+            {
+                Log("Tool button \"" + item.Label + "\" clicked");
+            };
+        }
     }
 }

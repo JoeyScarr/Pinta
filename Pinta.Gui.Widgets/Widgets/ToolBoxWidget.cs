@@ -46,6 +46,8 @@ namespace Pinta.Gui.Widgets
 		// TODO: This should handle sorting the items
 		public void AddItem (ToolButton item)
 		{
+            Logger.AddToolLogging(item);
+
 			if (tb1.NItems <= tb2.NItems)
 				tb1.Insert (item, tb1.NItems);
 			else
