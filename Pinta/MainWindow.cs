@@ -110,6 +110,7 @@ namespace Pinta
 			PintaCore.Workspace.ActiveDocumentChanged += ActiveDocumentChanged;
 
             Logger.AddMenuLogging(main_menu);
+            Logger.AddToolbarLogging(PintaCore.Chrome.MainToolBar);
 		}
 
 		[GLib.ConnectBefore]

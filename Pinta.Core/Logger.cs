@@ -76,6 +76,27 @@ namespace Pinta.Core
             }
         }
 
+        public static void AddToolbarLogging(Toolbar toolbar)
+        {
+            foreach (Widget child in toolbar.Children)
+            {
+                ToolButton t = child as ToolButton;
+                if (t == null)
+                    continue;
+
+                Button b = t.Child as Button;
+                if (b == null)
+                    continue;
+
+                string name = t.TooltipText;
+
+                b.Pressed += delegate(object o, EventArgs e)
+                {
+                    Log("Toolbar item \"" + name + "\" clicked");
+                };
+            }
+        }
+
         public static void AddToolLogging(ToolButton item)
         {
             item.Clicked += delegate(object o, EventArgs e)
