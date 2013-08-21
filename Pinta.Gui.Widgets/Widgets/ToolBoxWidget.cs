@@ -44,7 +44,7 @@ namespace Pinta.Gui.Widgets
 		}
 		
 		// TODO: This should handle sorting the items
-		public void AddItem (ToolButton item)
+		public void AddItem (ToggleToolButton item)
 		{
             Logger.AddToolLogging(item);
 
@@ -54,7 +54,7 @@ namespace Pinta.Gui.Widgets
 				tb2.Insert (item, tb2.NItems);
 		}
 
-		public void RemoveItem (ToolButton item)
+		public void RemoveItem (ToggleToolButton item)
 		{
 			//Run a remove on both tables since it might be in either
 			tb1.Remove (item);

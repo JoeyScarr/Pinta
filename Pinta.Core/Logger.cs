@@ -97,11 +97,12 @@ namespace Pinta.Core
             }
         }
 
-        public static void AddToolLogging(ToolButton item)
+        public static void AddToolLogging(ToggleToolButton item)
         {
-            item.Clicked += delegate(object o, EventArgs e)
+            item.Toggled += delegate(object o, EventArgs e)
             {
-                Log("Tool button \"" + item.Label + "\" clicked");
+                if (item.Active)
+                    Log("Tool button \"" + item.Label + "\" clicked");
             };
         }
     }
