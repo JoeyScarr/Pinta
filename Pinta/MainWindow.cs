@@ -291,7 +291,11 @@ namespace Pinta
 		{
             var tool_toolbar = window_shell.CreateToolToolBar(delegate(object o, EventArgs e) {
                 Logger.Log("\"Commands\" button pressed");
-                cmd_map.On(false);
+                if (!cmd_map.Visible) {
+                    cmd_map.On(false);
+                } else {
+                    cmd_map.Off(true);
+                }
             });
 
 			tool_toolbar.ToolbarStyle = ToolbarStyle.Icons;
