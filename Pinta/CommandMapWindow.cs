@@ -127,9 +127,9 @@ namespace Pinta
 			CreateButtons ("Quit", PintaCore.Actions.File.GetQuitActions (), quit.Body);
             CreateButtons ("Help", PintaCore.Actions.Help.GetHelpActions (), help.Body);
             CreateButtons ("Palette", PintaCore.Actions.Edit.GetPaletteActions (), palette.Body);
-			main5.Add (quit);
-			main5.Add (help);
             main5.Add (palette);
+			main5.Add (help);
+			main5.Add (quit);
 			vbox2.Add (main5);
 
 			PintaCore.Tools.ToolAdded += HandleToolAdded;
