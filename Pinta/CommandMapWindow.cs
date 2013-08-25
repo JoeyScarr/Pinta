@@ -10,8 +10,8 @@ namespace Pinta
 {
     public class CommandMapWindow : Gtk.Window
 	{
-		private HBox tools1;
-		private HBox tools2;
+		private Box tools1;
+		private Box tools2;
 
 		private List<HBox> command_map_boxes;
 		private Dictionary<Gtk.Action, Button> command_map_buttons;
@@ -33,12 +33,28 @@ namespace Pinta
 
             var eventBox = new CommandMapEventBox(this);
 			var frame = new Frame ();
-			VBox vbox = new VBox ();
-			vbox.Spacing = spacing;
-            vbox.BorderWidth = spacing;
-			frame.Add (vbox);
+            HBox topLevelBox = new HBox();
+            VBox vbox1 = new VBox();
+            vbox1.Spacing = spacing;
+            vbox1.BorderWidth = spacing;
+            topLevelBox.Add(vbox1);
+            VBox vbox2 = new VBox();
+            vbox2.Spacing = spacing;
+            vbox2.BorderWidth = spacing;
+            topLevelBox.Add(vbox2);
+            frame.Add(topLevelBox);
             eventBox.Add(frame);
 			Add (eventBox);
+
+            // Add rows for tools and box for tool toolbar.
+            var tools = new CategoryBox("Tools");
+            var toolsBox = new HBox();
+            tools1 = new VBox();
+            toolsBox.Add(tools1);
+            tools2 = new VBox();
+            toolsBox.Add(tools2);
+            tools.Body.Add(toolsBox);
+            vbox1.Add(tools);
 
 			// Add the main toolbars.
 			HBox main1 = new HBox ();
@@ -49,7 +65,7 @@ namespace Pinta
 			CreateButtons ("Edit", PintaCore.Actions.Edit.GetEditActions (), edit.Body);
 			main1.Add (file);
 			main1.Add (edit);
-			vbox.Add (main1);
+			vbox2.Add (main1);
 
 			HBox main2 = new HBox ();
 			main2.Spacing = spacing;
@@ -59,7 +75,7 @@ namespace Pinta
 			CreateButtons ("Crop", PintaCore.Actions.Image.GetCropActions (), crop.Body);
 			main2.Add (select);
 			main2.Add (crop);
-			vbox.Add (main2);
+			vbox2.Add (main2);
 
 			HBox main3 = new HBox ();
 			main3.Spacing = spacing;
@@ -69,7 +85,7 @@ namespace Pinta
             CreateButtons("Transform", PintaCore.Actions.Image.GetTransformActions(), transform.Body);
             main3.Add(transform);
 			main3.Add (zoom);
-			vbox.Add (main3);
+			vbox2.Add (main3);
 
 			HBox main4 = new HBox ();
 			main4.Spacing = spacing;
@@ -79,17 +95,7 @@ namespace Pinta
 			CreateButtons ("Layer Transform", PintaCore.Actions.Layers.GetLayerTransformActions (), layer_transform.Body);
 			main4.Add (layers);
 			main4.Add (layer_transform);
-			vbox.Add (main4);
-
-			// Add rows for tools and box for tool toolbar.
-			var tools = new CategoryBox ("Tools");
-			var toolsBox = new VBox ();
-			tools1 = new HBox ();
-			toolsBox.Add (tools1);
-			tools2 = new HBox ();
-			toolsBox.Add (tools2);
-			tools.Body.Add (toolsBox);
-			vbox.Add (tools);
+			vbox2.Add (main4);
 
 			// Add adjustments and add-ins manager.
             var adjustmentsRow = new HBox();
@@ -104,13 +110,13 @@ namespace Pinta
             CreateButtons("Add-ins", PintaCore.Actions.Addins.GetAddinActions(), addins.Body);
             adjustmentsRow.Add(addins);
 
-			vbox.Add (adjustmentsRow);
+			vbox2.Add (adjustmentsRow);
 
 			// Add effects.
 			var effects = new CategoryBox ("Effects");
 			EffectsCommandMapBox = new VBox ();
 			effects.Body.Add (EffectsCommandMapBox);
-			vbox.Add (effects);
+			vbox2.Add (effects);
 
 			// Add quit, help, and palette frames.
 			HBox main5 = new HBox ();
@@ -124,7 +130,7 @@ namespace Pinta
 			main5.Add (quit);
 			main5.Add (help);
             main5.Add (palette);
-			vbox.Add (main5);
+			vbox2.Add (main5);
 
 			PintaCore.Tools.ToolAdded += HandleToolAdded;
 			PintaCore.Tools.ToolRemoved += HandleToolRemoved;
