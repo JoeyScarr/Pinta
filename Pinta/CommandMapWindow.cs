@@ -250,7 +250,13 @@ namespace Pinta
 
 				VBox box = new VBox ();
 				box.Add (icon);
-				box.Add (new Label (tool.Name));
+                Label label = new Label(tool.Name);
+                label.Justify = Justification.Center;
+                label.WidthChars = 11;
+                label.Wrap = true;
+                label.LineWrap = true;
+                label.LineWrapMode = Pango.WrapMode.Word;
+				box.Add (label);
 				Add (box);
 
 				ButtonReleaseEvent += Tool_HandleButtonReleaseEvent;
