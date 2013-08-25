@@ -90,14 +90,14 @@ namespace Pinta
         {
             HBox hbox = new HBox();
 
+            Button cm_button = new Button();
+            cm_button.Label = "More commands... (Press <Ctrl>)";
+            cm_button.Clicked += cm_button_handler;
+            hbox.PackStart(cm_button, false, true, 0);
+
             main_toolbar = new Toolbar();
             main_toolbar.Name = "tool_toolbar";
             hbox.PackStart(main_toolbar, true, true, 0);
-
-            Button cm_button = new Button();
-            cm_button.Label = "Commands (Press <Ctrl>)";
-            cm_button.Clicked += cm_button_handler;
-            hbox.PackEnd(cm_button, false, false, 0);
 
             menu_layout.PackStart(hbox, false, false, 0);
             hbox.ShowAll();
